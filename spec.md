@@ -208,14 +208,31 @@
 ## §5. Prototype (chặng 5)
 
 - **File và công cụ:** [Mở prototype](prototype/index.html). Viết bằng HTML/CSS/JavaScript, mở trực tiếp bằng trình duyệt. Một màn hình chat với hai ca #2 và #8; bảng điều khiển riêng dành cho người demo.
-- **Phần mô phỏng:** Toàn bộ dữ liệu, hồ sơ và kết quả lưu/chuyển dược sĩ đều dựng; không có backend, không lưu hồ sơ thật, không có lời gọi AI thật. Hai nút gọi cấp cứu/bản đồ ở ca #2 chỉ hiển thị trạng thái mô phỏng, không gọi điện hoặc mở bản đồ thật. Người demo chọn kết quả công cụ trước thao tác. Lưu/gửi trả kết quả sau 2 giây; nhánh quá hạn sau 10 giây; nhánh chưa nhận ca sau 2 phút tính từ gửi thành công.
-- **Ảnh và chú thích:** Cần chụp 1–2 ảnh từ prototype và lưu vào `prototype/` trước khi nộp. Các vị trí đã được gắn A–D trên giao diện; có công tắc ẩn/hiện chú thích:
-  - **Ảnh ca #2:** A là cảnh báo kèm căn cứ từ lời khách — G10 và PAIR Explainability + Trust, mức tự làm; B là trạng thái chuyển người và lời nhắc không chờ cuộc chat — chuyển dược sĩ tự làm, không trì hoãn cảnh báo. Không có thẻ thuốc hay nút đặt.
-  - **Ảnh ca #8:** C là thẻ đúng người/nội dung/hồ sơ, có sửa, xác nhận và không lưu — G9, mức cần khách duyệt; D là kết quả thực thi và đường chuyển người khi lỗi/chưa xác định — PAIR Explainability + Trust. Nên chụp trạng thái chưa xác định kết quả để thể hiện ca khó.
+- **Phần mô phỏng:** Toàn bộ dữ liệu, hồ sơ và kết quả lưu/chuyển dược sĩ đều dựng; không có backend, không lưu hồ sơ thật, không có lời gọi AI thật. Hai nút gọi cấp cứu/bản đồ ở ca #2 chỉ hiển thị trạng thái mô phỏng, không gọi điện hoặc mở bản đồ thật. Người demo chọn thẻ #2 hoặc #8, chỉ thấy các điều khiển tương ứng: #2 chọn kết quả chuyển dược sĩ, #8 chọn kết quả lưu; phần chuyển hỗ trợ hồ sơ chỉ hiện khi có kết quả lưu cần xử lý. Mặc định demo #2 là chuyển thất bại, #8 là lưu quá hạn; đây là trường hợp minh họa nhóm chọn, không phải kết quả bắt buộc của đề. Đổi trường hợp lưu hoặc chuyển ở #2 sẽ chạy lại đúng ca để tránh lẫn trạng thái. Lưu/gửi trả kết quả sau 2 giây; nhánh quá hạn sau 10 giây; nhánh chưa nhận ca sau 2 phút tính từ gửi thành công.
+- **Ảnh và chú thích:** Hai ảnh chụp prototype bên dưới có đánh dấu A–D; có công tắc ẩn/hiện chú thích khi demo:
+  - **Ảnh ca #2 — chuyển thất bại** ([xem ảnh](prototype/image.png)): A là cảnh báo kèm căn cứ từ lời khách — G10 và PAIR Explainability + Trust, mức tự làm; B là trạng thái chuyển người và lời nhắc không chờ cuộc chat — chuyển dược sĩ tự làm, không trì hoãn cảnh báo. Không có thẻ thuốc hay nút đặt.
+  - **Ảnh ca #8 — lưu quá hạn** ([xem ảnh](prototype/Screenshot%202026-11-12%20at%2016.46.57.png)): C là thẻ đúng người/nội dung/hồ sơ đã xác nhận; D là trạng thái chưa xác định kết quả và đường chuyển dược sĩ — PAIR Explainability + Trust. Nút sửa, xác nhận và không lưu xuất hiện trước khi gửi, được bấm trực tiếp khi demo để chứng minh G9 và mức cần khách duyệt.
+![Ảnh 1 — Ca #2: cảnh báo và chuyển dược sĩ thất bại](prototype/image.png)
+
+![Ảnh 2 — Ca #8: chưa xác định kết quả lưu](prototype/Screenshot%202026-11-12%20at%2016.46.57.png)
+
 - **Quyết định giao diện và phương án đã loại:** Hiện căn cứ bằng chính thông tin khách cung cấp và hiện trạng thái lưu riêng, thay cho phần trăm độ chắc không có nguồn. Cho sửa ngay trong thẻ rồi xác nhận lại, thay cho hộp thông báo không sửa được. Tách lưu thất bại khỏi chưa xác định kết quả, vì chỉ trường hợp biết chưa ghi mới cho thử lại; loại cách luôn báo thành công sau đếm ngược. Cảnh báo #2 giữ nguyên khi chuyển người lỗi; loại cách để khách chờ dược sĩ trước khi thấy cảnh báo. Bố cục chuyển bảng demo lên trên khi màn hình hẹp để không che cuộc chat.
 
-## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
-- 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
+## §6. Tốt là gì (chặng 6)
+
+**Ba tiêu chí Pass/Fail:**
+
+1. **Đúng quyền và đúng thứ tự hành động.** Pass khi #2 hiện cảnh báo ngay, không có gợi ý thuốc/nút đặt và không đợi dược sĩ nhận; #8 chỉ gọi lưu sau khi khách xác nhận, không gửi yêu cầu ghi nếu khách chọn “Không lưu”. Fail nếu bất kỳ điều kiện nào không đạt.
+2. **Thông báo đúng kết quả thực thi.** Pass khi #2 phân biệt đang gửi, đã gửi và dược sĩ đã nhận; #8 chỉ báo “Đã lưu” khi có kết quả thành công cho đúng hồ sơ/nội dung đã xác nhận. Tool xác nhận chưa ghi phải báo thất bại; hết 10 giây chưa có kết quả phải báo chưa xác định, không tự gửi lại. Fail nếu báo hoàn tất khi chưa có xác nhận hoặc đánh đồng quá hạn với thất bại.
+3. **Có bước tiếp theo khi lỗi hoặc cần sửa.** Pass khi #2 vẫn giữ cảnh báo lúc chuyển dược sĩ thất bại và có nút thử chuyển lại; #8 sửa được người/hồ sơ/nội dung trước khi lưu, thử lại được khi tool xác nhận chưa ghi và chuyển dược sĩ được khi kết quả chưa xác định. Đổi ca/reset không để tác vụ cũ cập nhật nhầm ca mới. Fail nếu thiếu đường xử lý tương ứng hoặc trạng thái bị lẫn giữa hai ca.
+
+**Chấm thử trên hai kịch bản đắt nhất:**
+
+*Đối chiếu thiết kế và kiểm tra logic JavaScript với dữ liệu dựng, chưa phải kiểm thử giao diện trực tiếp trên trình duyệt hoặc hệ thống thật.*
+
+- **Kịch bản #2:** Tiêu chí 1 **Pass** — cảnh báo xuất hiện trước kết quả chuyển, không có thao tác gửi thuốc hay lưu hồ sơ. Tiêu chí 2 **Pass** — trạng thái gửi và nhận tách riêng; lỗi/quá hạn không báo đã nhận. Tiêu chí 3 **Pass** — chuyển thất bại vẫn giữ lời nhắc không chờ cuộc chat, có đường thử lại; đổi sang #8 hủy các timer cũ.
+- **Kịch bản #8:** Tiêu chí 1 **Pass** — bước lưu cần xác nhận, chọn không lưu không tạo thao tác ghi. Tiêu chí 2 **Pass** — kiểm tra riêng thành công, xác nhận chưa ghi và quá hạn; không cho gửi lại khi kết quả còn chưa rõ. Tiêu chí 3 **Pass** — kiểm tra sửa hồ sơ/nội dung trước lưu, thử lại sau thất bại và chuyển dược sĩ sau quá hạn. Các kết quả là mô phỏng, không chứng minh hồ sơ thật đã cập nhật.
+- **Lỗi/giới hạn còn lại:** Đã xem hai ảnh giao diện desktop tại §5; chưa kiểm thử trực tiếp toàn bộ nút bấm, thao tác bàn phím và bố cục điện thoại. Prototype chỉ có hai ca dựng sẵn, chưa chứng minh nhận diện được tin nhắn lạ. Lưu/chuyển người và hai nút gọi cấp cứu/bản đồ đều mô phỏng; chưa kiểm tra tích hợp hệ thống thật. Các kết quả Pass ở trên chỉ áp dụng cho phạm vi kiểm tra logic và dữ liệu dựng đã nêu.
 
 ## §7. Demo
 - Ca lạ nhận được ở demo: prototype đã làm gì, và nhóm có đổi ý gì sau ca đó không.
