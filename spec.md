@@ -205,10 +205,26 @@
 - **Lời hứa ứng với mức đã chọn:** “Trợ lý AI giúp làm rõ thông tin và kết nối dược sĩ. Gợi ý thuốc chỉ được gửi sau khi dược sĩ duyệt; khi có dấu hiệu nguy hiểm, cảnh báo được hiện ngay để bạn không phải chờ tư vấn thuốc. Thông tin sức khỏe chỉ được lưu sau khi bạn kiểm tra và xác nhận nội dung, hồ sơ đích; chỉ báo đã lưu khi hệ thống xác nhận thành công.”
 - **Thay đổi cụ thể:** `goi_y_san_pham` cần duyệt nên không hứa có thuốc ngay; `khuyen_di_kham` tự làm nên không bắt chờ duyệt cảnh báo. Trong mọi nhánh, chỉ báo một việc đã hoàn tất sau khi có kết quả xác nhận tương ứng.
 
-## §5. Prototype  (chặng 5)
-- Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
-- 1–2 ảnh có đánh số; mỗi số: thể hiện gì · nguyên tắc HAX/PAIR nào · mức tự chủ nào.
-- Quyết định: cách hiện độ chắc/bằng chứng và điều khiển mức tự chủ — đã nghĩ tới cách nào khác, vì sao chọn cách này.
+## §5. Prototype (chặng 5)
+- **Công cụ:** HTML/CSS/JS thuần, chạy trực tiếp trên trình duyệt.
+- **Phần mock:** Giao diện app chat Pharmacity, luồng tin nhắn và thông báo kết quả trả về từ tool đều dùng dữ liệu giả định theo đúng `spec.md`. Không có lời gọi AI thật (LLM API) trong prototype này.
+- **File đính kèm:** `prototype_nhom_1.html` (nằm trong thư mục `prototype/`) và 2 ảnh chụp màn hình tương ứng.
+
+**Giải thích đánh số trên ảnh Prototype:**
+- **[Vị trí A] (Ảnh 1 - KB #2):** Thẻ CẢNH BÁO Y TẾ KHẨN CẤP màu đỏ khóa nút đặt mua thuốc. 
+  - *Nguyên tắc:* HAX G10 (Thu hẹp phạm vi khi rủi ro cao) & PAIR (Giải thích bằng chứng: "Bé 3 tuổi, sốt 39.5, li bì"). 
+  - *Mức tự chủ:* Tự làm đối với tool `khuyen_di_kham`.
+- **[Vị trí B] (Ảnh 1 - KB #2):** Thanh trạng thái khởi tạo `chuyen_duoc_si` chạy ngầm độc lập với cảnh báo. 
+  - *Mức tự chủ:* Tự làm.
+- **[Vị trí C] (Ảnh 2 - KB #8):** Thẻ xem trước thông tin chuẩn bị lưu kèm nút [Sửa thông tin].
+  - *Nguyên tắc:* HAX G9 (Sửa dễ dàng) & PAIR (Minh bạch dữ liệu: hiện rõ ai lưu, lưu gì, vào hồ sơ nào).
+  - *Mức tự chủ:* Cần người duyệt (khách hàng kiểm tra đúng nội dung trước khi gọi tool `luu_ghi_chu_suc_khoe`).
+- **[Vị trí D] (Ảnh 2 - KB #8):** Thanh trạng thái chỉ hiện "Đã lưu" hoặc "Lưu thất bại" dựa trên kết quả trả về của tool.
+  - *Nguyên tắc:* HAX G2 (Làm rõ hệ thống làm tốt đến đâu - không dùng text AI để ảo giác kết quả thực thi).
+
+**Lập luận thiết kế (Quyết định):**
+- **Cách hiện độ chắc chắn/bằng chứng:** Đã chọn hiện rõ nguyên văn lời khách tự khai (Vị trí A, C) vào các thẻ trạng thái riêng biệt thay vì để AI tóm tắt vào trong bong bóng chat. Việc này giúp khách dễ dàng đối chiếu xem hệ thống có nhận diện sai từ khóa hay không.
+- **Điều khiển mức tự chủ:** Với KB #2, nhóm chọn cách thiết kế chặn (block) toàn bộ thẻ sản phẩm, chỉ để lại nút gọi cấp cứu. *Phương án đã loại:* Hiện thẻ cảnh báo nhỏ màu vàng bên dưới thẻ mua thuốc. *Lý do loại:* Tâm lý người dùng lúc khẩn cấp thường hoảng loạn, nếu thấy nút "Đặt mua" họ sẽ bấm ngay lập tức mà bỏ qua các dòng text cảnh báo nhỏ giọt.
 
 ## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
 - 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
