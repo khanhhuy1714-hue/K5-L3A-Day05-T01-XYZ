@@ -206,25 +206,13 @@
 - **Thay đổi cụ thể:** `goi_y_san_pham` cần duyệt nên không hứa có thuốc ngay; `khuyen_di_kham` tự làm nên không bắt chờ duyệt cảnh báo. Trong mọi nhánh, chỉ báo một việc đã hoàn tất sau khi có kết quả xác nhận tương ứng.
 
 ## §5. Prototype (chặng 5)
-- **Công cụ:** HTML/CSS/JS thuần, chạy trực tiếp trên trình duyệt.
-- **Phần mock:** Giao diện app chat Pharmacity, luồng tin nhắn và thông báo kết quả trả về từ tool đều dùng dữ liệu giả định theo đúng `spec.md`. Không có lời gọi AI thật (LLM API) trong prototype này.
-- **File đính kèm:** `prototype_nhom_1.html` (nằm trong thư mục `prototype/`) và 2 ảnh chụp màn hình tương ứng.
 
-**Giải thích đánh số trên ảnh Prototype:**
-- **[Vị trí A] (Ảnh 1 - KB #2):** Thẻ CẢNH BÁO Y TẾ KHẨN CẤP màu đỏ khóa nút đặt mua thuốc. 
-  - *Nguyên tắc:* HAX G10 (Thu hẹp phạm vi khi rủi ro cao) & PAIR (Giải thích bằng chứng: "Bé 3 tuổi, sốt 39.5, li bì"). 
-  - *Mức tự chủ:* Tự làm đối với tool `khuyen_di_kham`.
-- **[Vị trí B] (Ảnh 1 - KB #2):** Thanh trạng thái khởi tạo `chuyen_duoc_si` chạy ngầm độc lập với cảnh báo. 
-  - *Mức tự chủ:* Tự làm.
-- **[Vị trí C] (Ảnh 2 - KB #8):** Thẻ xem trước thông tin chuẩn bị lưu kèm nút [Sửa thông tin].
-  - *Nguyên tắc:* HAX G9 (Sửa dễ dàng) & PAIR (Minh bạch dữ liệu: hiện rõ ai lưu, lưu gì, vào hồ sơ nào).
-  - *Mức tự chủ:* Cần người duyệt (khách hàng kiểm tra đúng nội dung trước khi gọi tool `luu_ghi_chu_suc_khoe`).
-- **[Vị trí D] (Ảnh 2 - KB #8):** Thanh trạng thái chỉ hiện "Đã lưu" hoặc "Lưu thất bại" dựa trên kết quả trả về của tool.
-  - *Nguyên tắc:* HAX G2 (Làm rõ hệ thống làm tốt đến đâu - không dùng text AI để ảo giác kết quả thực thi).
-
-**Lập luận thiết kế (Quyết định):**
-- **Cách hiện độ chắc chắn/bằng chứng:** Đã chọn hiện rõ nguyên văn lời khách tự khai (Vị trí A, C) vào các thẻ trạng thái riêng biệt thay vì để AI tóm tắt vào trong bong bóng chat. Việc này giúp khách dễ dàng đối chiếu xem hệ thống có nhận diện sai từ khóa hay không.
-- **Điều khiển mức tự chủ:** Với KB #2, nhóm chọn cách thiết kế chặn (block) toàn bộ thẻ sản phẩm, chỉ để lại nút gọi cấp cứu. *Phương án đã loại:* Hiện thẻ cảnh báo nhỏ màu vàng bên dưới thẻ mua thuốc. *Lý do loại:* Tâm lý người dùng lúc khẩn cấp thường hoảng loạn, nếu thấy nút "Đặt mua" họ sẽ bấm ngay lập tức mà bỏ qua các dòng text cảnh báo nhỏ giọt.
+- **File và công cụ:** [Mở prototype](prototype/index.html). Viết bằng HTML/CSS/JavaScript, mở trực tiếp bằng trình duyệt. Một màn hình chat với hai ca #2 và #8; bảng điều khiển riêng dành cho người demo.
+- **Phần mô phỏng:** Toàn bộ dữ liệu, hồ sơ và kết quả lưu/chuyển dược sĩ đều dựng; không có backend, không lưu hồ sơ thật, không gọi điện hoặc mở bản đồ, không có lời gọi AI thật. Người demo chọn kết quả công cụ trước thao tác. Lưu/gửi trả kết quả sau 2 giây; nhánh quá hạn sau 10 giây; nhánh chưa nhận ca sau 2 phút tính từ gửi thành công.
+- **Ảnh và chú thích:** Cần chụp 1–2 ảnh từ prototype và lưu vào `prototype/` trước khi nộp. Các vị trí đã được gắn A–D trên giao diện; có công tắc ẩn/hiện chú thích:
+  - **Ảnh ca #2:** A là cảnh báo kèm căn cứ từ lời khách — G10 và PAIR Explainability + Trust, mức tự làm; B là trạng thái chuyển người và lời nhắc không chờ cuộc chat — chuyển dược sĩ tự làm, không trì hoãn cảnh báo. Không có thẻ thuốc hay nút đặt.
+  - **Ảnh ca #8:** C là thẻ đúng người/nội dung/hồ sơ, có sửa, xác nhận và không lưu — G9, mức cần khách duyệt; D là kết quả thực thi và đường chuyển người khi lỗi/chưa xác định — PAIR Explainability + Trust. Nên chụp trạng thái chưa xác định kết quả để thể hiện ca khó.
+- **Quyết định giao diện và phương án đã loại:** Hiện căn cứ bằng chính thông tin khách cung cấp và hiện trạng thái lưu riêng, thay cho phần trăm độ chắc không có nguồn. Cho sửa ngay trong thẻ rồi xác nhận lại, thay cho hộp thông báo không sửa được. Tách lưu thất bại khỏi chưa xác định kết quả, vì chỉ trường hợp biết chưa ghi mới cho thử lại; loại cách luôn báo thành công sau đếm ngược. Cảnh báo #2 giữ nguyên khi chuyển người lỗi; loại cách để khách chờ dược sĩ trước khi thấy cảnh báo. Bố cục chuyển bảng demo lên trên khi màn hình hẹp để không che cuộc chat.
 
 ## §6. Tốt là gì  (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
 - 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.

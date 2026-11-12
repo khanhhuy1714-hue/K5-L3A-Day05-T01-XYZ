@@ -1,265 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prototype LAB5 - Track 1 Y Tế</title>
-    <style>
-        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; padding: 10px; }
-        
-        /* Mobile Frame */
-        .device {
-            width: 100%;
-            max-width: 414px;
-            height: 90vh;
-            max-height: 850px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 8px solid #333;
-        }
-
-        /* Header */
-        .header {
-            background: #005baa; /* Pharmacity Blue */
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .header-title { font-size: 16px; }
-        .header-subtitle { font-size: 11px; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; }
-
-        /* Chat Area */
-        .chat-area {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f4f7f6;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Message Bubbles */
-        .msg { max-width: 85%; line-height: 1.4; font-size: 14px; position: relative; }
-        .msg-user { align-self: flex-end; background: #e3f2fd; color: #005baa; padding: 10px 14px; border-radius: 15px 15px 0 15px; }
-        .msg-ai { align-self: flex-start; display: flex; flex-direction: column; gap: 8px; width: 100%; }
-        
-        .ai-text { background: white; border: 1px solid #e0e0e0; padding: 12px; border-radius: 15px 15px 15px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .ai-label { font-size: 11px; color: #666; font-weight: 500; display: flex; align-items: center; gap: 4px; margin-bottom: 4px;}
-
-        /* Cards & UI Elements */
-        .danger-card { border: 2px solid #e53935; background: #ffebee; padding: 12px; border-radius: 8px; margin-top: 5px; }
-        .danger-title { color: #e53935; font-weight: bold; margin-bottom: 5px; font-size: 13px;}
-        
-        .info-card { border: 1px solid #005baa; background: #e3f2fd; padding: 12px; border-radius: 8px; margin-top: 5px; }
-        .info-row { font-size: 13px; margin-bottom: 4px; display: flex; justify-content: space-between; }
-        .info-label { color: #555; }
-        .info-value { font-weight: bold; color: #333; }
-
-        .status-bar { font-size: 12px; color: #fff; background: #ff9800; padding: 6px 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
-        .status-bar.success { background: #4caf50; }
-        .status-bar.error { background: #f44336; }
-
-        /* Buttons */
-        .btn-group { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;}
-        .btn { flex: 1; padding: 8px 12px; border: none; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; text-align: center; }
-        .btn-primary { background: #005baa; color: white; }
-        .btn-danger { background: #e53935; color: white; }
-        .btn-outline { background: transparent; border: 1px solid #005baa; color: #005baa; }
-        .btn-secondary { background: #e0e0e0; color: #333; }
-
-        /* Markers for Spec.md Screenshots */
-        .marker {
-            background: #ff007f; color: white; font-weight: bold; font-size: 12px;
-            width: 22px; height: 22px; border-radius: 50%; display: inline-flex;
-            align-items: center; justify-content: center; position: absolute;
-            top: -10px; left: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10;
-            border: 2px solid white;
-        }
-
-        /* Demo Controls (Outside phone) */
-        .demo-controls {
-            position: absolute; left: 20px; top: 20px; background: white; padding: 15px;
-            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 250px;
-        }
-        .demo-controls h3 { margin-top: 0; font-size: 14px; }
-        .demo-btn { width: 100%; padding: 10px; margin-bottom: 10px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .demo-btn:hover { background: #555; }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hỏi dược sĩ · Prototype Track 1</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f1f4f6;color:#1d2935;font:15px/1.55 system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button{cursor:pointer;min-height:44px;padding:9px 13px;border-radius:8px;border:1px solid #bac8d3;background:white;color:#153e60}button.primary{background:#075b9f;border-color:#075b9f;color:white}button:disabled{opacity:.55;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #277fbd;outline-offset:3px}.layout{max-width:960px;margin:auto;padding:24px;display:grid;grid-template-columns:280px minmax(0,460px);gap:28px;justify-content:center;align-items:start}aside{background:white;border:1px solid #d4dde4;border-radius:12px;padding:18px}h1{font-size:19px;margin:0 0 8px}h2{font-size:16px;margin:0 0 8px}p{margin:0 0 12px}.muted,small{color:#536575;font-size:13px}label{display:block;margin:12px 0 5px}select,input{width:100%;min-height:44px;border:1px solid #a9bac8;border-radius:7px;padding:8px;background:white;color:#1d2935}input[type=checkbox]{width:auto;min-height:0}.demo-buttons{display:grid;gap:8px;margin:15px 0}.device{border:1px solid #b9c8d4;border-radius:16px;overflow:hidden;background:white;min-width:0}header{background:#075b9f;color:white;padding:17px 20px}header strong{font-size:19px;display:block}header small{color:#e4eef6}.chat{padding:18px;background:#f7f9fa;min-height:540px;max-height:76vh;overflow-y:auto}.message{margin:0 0 16px;padding:13px;background:white;border:1px solid #dce4e9;border-radius:11px;overflow-wrap:anywhere}.user{background:#e5f0f9;margin-left:30px;border-color:#ccdfed}.who{font-size:12px;color:#526675;margin-bottom:7px}.card{border:1px solid #a8c6dc;background:#edf5fa;border-radius:9px;padding:14px;margin:12px 0}.danger{background:#fff0ef;border-color:#c6433a}.danger h2,.urgent{color:#9c241b}.urgent{font-weight:700;margin-bottom:0}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.actions button{flex:1 1 125px}.row{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;margin:7px 0}.row span{color:#526575}.status{padding:11px;border:1px solid #d1ac51;background:#fff7e1;border-radius:8px;margin-top:12px}.success{background:#eaf5ed;border-color:#80ab8b}.error{background:#fff0ef;border-color:#c66c65}.marker{display:inline-flex;align-items:center;justify-content:center;background:#244e6c;color:white;border-radius:50%;width:23px;height:23px;font-size:12px;font-weight:700;margin-right:6px}.hide-markers .marker{display:none}footer{padding:10px 18px;background:white;border-top:1px solid #dce4e9;font-size:12px;color:#526575}.legend{margin-top:18px;border-top:1px solid #dce4e9;padding-top:12px}.legend p{font-size:13px;margin-bottom:8px}.validation{color:#9c241b}form{margin:0}.compact{font-size:13px} .badge{font-size:12px;color:#36526a;font-weight:600}
+@media(max-width:740px){.layout{display:flex;flex-direction:column;padding:12px;gap:14px}aside,.device{width:100%}.chat{max-height:none;min-height:380px}.row{grid-template-columns:1fr;gap:0}.demo-buttons{grid-template-columns:1fr 1fr}.legend{display:none}}
+</style>
 </head>
 <body>
-
-    <!-- Bảng điều khiển Demo dành cho nhóm (Không chụp phần này vào báo cáo) -->
-    <div class="demo-controls">
-        <h3>Menu Điều Khiển Demo</h3>
-        <p style="font-size: 11px; color: #666; margin-bottom: 15px;">Bấm để chạy kịch bản thử nghiệm. Màn hình tự động cuộn.</p>
-        <button class="demo-btn" onclick="runScenario2()">Chạy KB #2 (Trẻ sốt li bì)</button>
-        <button class="demo-btn" onclick="runScenario8()">Chạy KB #8 (Lưu dị ứng)</button>
-        <button class="demo-btn" style="background:#005baa;" onclick="clearChat()">Xóa Chat</button>
-    </div>
-
-    <!-- Màn hình Prototype -->
-    <div class="device">
-        <div class="header">
-            <div class="header-title">Hỏi Dược Sĩ</div>
-            <div class="header-subtitle">Trợ lý AI Pharmacity</div>
-        </div>
-        
-        <div class="chat-area" id="chatArea">
-            <!-- Tin nhắn mặc định -->
-            <div class="msg msg-ai">
-                <div class="ai-text">
-                    <span class="ai-label">🤖 Trợ lý AI — Không thay thế bác sĩ/dược sĩ</span>
-                    Xin chào! Bạn cần tìm thuốc hay tư vấn sức khỏe cho ai ạ?
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const chatArea = document.getElementById('chatArea');
-
-        function clearChat() {
-            chatArea.innerHTML = `
-                <div class="msg msg-ai">
-                    <div class="ai-text">
-                        <span class="ai-label">🤖 Trợ lý AI — Không thay thế bác sĩ/dược sĩ</span>
-                        Xin chào! Bạn cần tìm thuốc hay tư vấn sức khỏe cho ai ạ?
-                    </div>
-                </div>`;
-        }
-
-        // ====== KỊCH BẢN ĐẮT NHẤT 1: TRẺ SỐT LI BÌ (KB #2) ======
-        function runScenario2() {
-            clearChat();
-            
-            // 1. Khách nhắn
-            setTimeout(() => {
-                chatArea.innerHTML += `<div class="msg msg-user">Con mình 3 tuổi đang sốt cao 39.5 độ, li bì, cho mình thuốc hạ sốt loại mạnh.</div>`;
-                scrollToBottom();
-            }, 500);
-
-            // 2. AI Cảnh báo & Không có nút đặt mua
-            setTimeout(() => {
-                chatArea.innerHTML += `
-                <div class="msg msg-ai">
-                    <div class="ai-text" style="position: relative;">
-                        <span class="ai-label">🤖 Trợ lý AI — Không thay thế bác sĩ/dược sĩ</span>
-                        Bạn có nhắc bé 3 tuổi đang sốt cao và li bì. Đây là dấu hiệu nguy hiểm cần được khám ngay. Mình không gợi ý thuốc trong tình huống này.
-                        
-                        <div class="danger-card" style="position:relative;">
-                            <span class="marker" title="HAX G10 - Thu hẹp phạm vi">A</span>
-                            <div class="danger-title">⚠️ CẢNH BÁO Y TẾ KHẨN CẤP</div>
-                            <div style="font-size: 12px; margin-bottom: 8px;">
-                                <strong>Bằng chứng nhận diện:</strong><br>
-                                • Đối tượng: Trẻ 3 tuổi<br>
-                                • Triệu chứng: Sốt cao 39.5°C, Li bì
-                            </div>
-                            <div style="font-size: 13px; font-weight: 500; color: #333;">
-                                Hãy đưa bé đi cấp cứu hoặc gọi 115 ngay; đừng chờ phản hồi trong cuộc chat này!
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-danger" onclick="alert('Đang gọi 115...')">📞 Gọi Cấp Cứu 115</button>
-                                <button class="btn btn-outline" onclick="alert('Mở bản đồ tìm cơ sở y tế...')">🏥 Tìm CSYT gần nhất</button>
-                            </div>
-                        </div>
-
-                        <div class="status-bar" style="margin-top: 10px; position:relative;">
-                            <span class="marker" style="background:#ff9800; border-color:#fff;" title="Trạng thái chuyển tuyến">B</span>
-                            <span>⏳ Đang gửi yêu cầu ưu tiên tới Dược sĩ tuyến đầu...</span>
-                        </div>
-                    </div>
-                </div>`;
-                scrollToBottom();
-
-                // Giả lập chuyển thành công sau 2 giây
-                setTimeout(() => {
-                    const statusBar = document.querySelector('.status-bar');
-                    if(statusBar) {
-                        statusBar.className = 'status-bar success';
-                        statusBar.innerHTML = '✅ Đã gửi yêu cầu. Không chờ cuộc chat để đi cấp cứu!';
-                    }
-                }, 2000);
-            }, 1000);
-        }
-
-        // ====== KỊCH BẢN ĐẮT NHẤT 2: LƯU HỒ SƠ DỊ ỨNG (KB #8) ======
-        function runScenario8() {
-            clearChat();
-            
-            // 1. Khách nhắn
-            setTimeout(() => {
-                chatArea.innerHTML += `<div class="msg msg-user">Lưu lại giúp mình là mình bị dị ứng Ibuprofen nhé, sau đừng kê.</div>`;
-                scrollToBottom();
-            }, 500);
-
-            // 2. AI Yêu cầu xác nhận (Kiểm duyệt thẻ)
-            setTimeout(() => {
-                chatArea.innerHTML += `
-                <div class="msg msg-ai" id="allergy-response">
-                    <div class="ai-text" style="position: relative;">
-                        <span class="ai-label">🤖 Trợ lý AI</span>
-                        Bạn muốn ghi nhận dị ứng Ibuprofen cho chính mình. Hãy kiểm tra nội dung và hồ sơ bên dưới trước khi lưu.
-                        
-                        <div class="info-card" style="position:relative;">
-                            <span class="marker" style="background:#005baa;" title="HAX G9 - Sửa dễ dàng (Kiểm tra trước)">C</span>
-                            <div class="info-row"><span class="info-label">Người cần lưu:</span> <span class="info-value">Bản thân (Khách hàng)</span></div>
-                            <div class="info-row"><span class="info-label">Nội dung tự báo:</span> <span class="info-value" style="color:#e53935;">Dị ứng Ibuprofen</span></div>
-                            <div class="info-row"><span class="info-label">Mục đích:</span> <span class="info-value">Ghi chú hỗ trợ tư vấn sau</span></div>
-                            <div class="info-row"><span class="info-label">Mã hồ sơ đích:</span> <span class="info-value">#HS-9012</span></div>
-                            
-                            <div class="btn-group" id="confirm-btns">
-                                <button class="btn btn-primary" onclick="confirmSave()">Xác nhận lưu</button>
-                                <button class="btn btn-outline" onclick="alert('Chuyển form sửa thông tin...')">Sửa thông tin</button>
-                            </div>
-                        </div>
-
-                        <div id="save-status-container" style="margin-top: 10px; display: none; position: relative;">
-                            <span class="marker" style="background:#4caf50;" title="Trạng thái thực thi Tool">D</span>
-                            <div class="status-bar" id="save-status">⏳ Đang gọi hệ thống lưu hồ sơ...</div>
-                        </div>
-                    </div>
-                </div>`;
-                scrollToBottom();
-            }, 1000);
-        }
-
-        // Xử lý nút bấm Xác nhận lưu
-        function confirmSave() {
-            document.getElementById('confirm-btns').style.display = 'none';
-            document.getElementById('save-status-container').style.display = 'block';
-            
-            // Giả lập tool chạy mất 2s
-            setTimeout(() => {
-                const status = document.getElementById('save-status');
-                status.className = 'status-bar success';
-                status.innerHTML = '✅ Đã lưu ghi chú vào hồ sơ #HS-9012.';
-                
-                // AI nói thêm
-                chatArea.innerHTML += `
-                <div class="msg msg-ai" style="margin-top: -5px;">
-                    <div class="ai-text">
-                        <span class="ai-label">🤖 Trợ lý AI</span>
-                        Đây là thông tin do bạn tự cung cấp. Khi được tư vấn, bạn vẫn nên chủ động nhắc lại thông tin dị ứng để an toàn nhất nhé!
-                    </div>
-                </div>`;
-                scrollToBottom();
-            }, 2000);
-        }
-
-        function scrollToBottom() {
-            chatArea.scrollTop = chatArea.scrollHeight;
-        }
-    </script>
-</body>
-</html>
+<main class="layout">
+<aside aria-label="Điều khiển demo">
+<h1>Track 1 · Hỏi dược sĩ</h1><p class="muted">Prototype học tập. Dữ liệu và kết quả công cụ đều mô phỏng; không gửi thông tin, không gọi điện hoặc lưu hồ sơ thật.</p>
+<div class="demo-buttons"><button id="scenario2" type="button">Ca #2 · Trẻ sốt, li bì</button><button id="scenario8" type="button">Ca #8 · Lưu dị ứng</button></div>
+<label for="save-result">Kết quả lưu giả lập</label><select id="save-result"><option value="success">Lưu thành công</option><option value="failure">Thất bại — xác nhận chưa ghi</option><option value="timeout">Quá hạn — chưa rõ kết quả</option></select>
+<label for="handoff-result">Kết quả chuyển dược sĩ giả lập</label><select id="handoff-result"><option value="received">Đã gửi → Dược sĩ nhận</option><option value="sent">Đã gửi → Chưa có người nhận</option><option value="failure">Gửi thất bại</option><option value="timeout">Chưa rõ kết quả gửi</option></select>
+<p class="muted" style="margin-top:10px">Chọn kết quả trước khi bấm thao tác. Lưu/gửi: 2 giây; quá hạn: 10 giây. Nhánh chưa có người nhận: 2 phút kể từ gửi thành công.</p>
+<label><input type="checkbox" id="markers" checked> Hiện chú thích A–D</label><button id="reset" type="button" style="margin-top:10px">Bắt đầu lại</button>
+<div class="legend"><h2>Vị trí trong thiết kế</h2><p><b>A:</b> G10 · thu hẹp phạm vi; căn cứ từ tin khách.</p><p><b>B:</b> Cảnh báo không phụ thuộc việc chuyển người.</p><p><b>C:</b> G9 · kiểm tra và sửa trước khi lưu.</p><p><b>D:</b> PAIR · kết quả thực thi, không phải lời hứa.</p></div>
+</aside>
+<section class="device" aria-label="Cuộc chat mô phỏng"><header><strong>Hỏi dược sĩ</strong><small>Trợ lý AI · Không thay thế bác sĩ/dược sĩ</small></header><div id="chat" class="chat" aria-live="polite" aria-relevant="additions text"></div><footer>Dữ liệu dựng · Không có giao dịch hoặc hồ sơ thật</footer></section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const profiles={self:{name:'Bản thân · Khách mẫu',id:'HS-DEMO-01'},mother:{name:'Mẹ · Người nhà mẫu',id:'HS-DEMO-02'}};
+let session=0,timers=[],state;
+function later(fn,ms){const token=session;const id=setTimeout(()=>{if(token===session)fn()},ms);timers.push(id)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function mark(x){return '<span class="marker">'+x+'</span>'}
+function reset(c='welcome'){session++;timers.forEach(clearTimeout);timers=[];state={scenario:c,profile:'self',note:'Dị ứng Ibuprofen',editing:false,save:'draft',transfer:'idle',request:null,error:'',submitted:null};render()}
+function start(c){reset(c);if(c==='2')handoff()}
+function user(t){return '<div class="message user">'+esc(t)+'</div>'}
+function message(t){return '<div class="message"><div class="who">Trợ lý AI</div>'+t+'</div>'}
+function transferHTML(){const labels={idle:'Chưa gửi yêu cầu',sending:'Đang gửi yêu cầu',sent:'Đã gửi yêu cầu — chưa có dược sĩ nhận',received:'Dược sĩ đã nhận ca mô phỏng',failure:'Chưa chuyển được — yêu cầu gửi thất bại',unknown:'Chưa xác định được kết quả gửi',waiting:'Đã gửi yêu cầu — sau 2 phút vẫn chưa có dược sĩ nhận'};const v=state.transfer;let h='<div class="status '+(v==='received'?'success':v==='failure'?'error':'')+'">'+mark('B')+'<strong>'+labels[v]+'</strong>';
+if(state.scenario==='2')h+='<p class="urgent">Không chờ cuộc chat để đi cấp cứu.</p>';
+if(v==='failure')h+='<div class="actions"><button data-action="handoff">Thử chuyển lại</button></div>';
+if(v==='unknown')h+='<p class="compact">Chưa thể xác nhận đã gửi. Không tự gửi lại để tránh trùng yêu cầu.</p>';
+if(v==='waiting')h+='<p class="compact">Bạn có thể liên hệ nhà thuốc qua kênh hỗ trợ chính thức. Hệ thống không tự chuyển lại sang gợi ý thuốc.</p>';
+return h+'</div>'}
+function handoff(){if(['sending','sent','received','unknown','waiting'].includes(state.transfer))return;const outcome=$('handoff-result').value;state.transfer='sending';render();later(()=>{state.transfer=outcome==='failure'?'failure':outcome==='timeout'?'unknown':'sent';render();if(outcome==='received')later(()=>{state.transfer='received';render()},1000);if(outcome==='sent')later(()=>{state.transfer='waiting';render()},120000)},outcome==='timeout'?10000:2000)}
+function edit(){if(state.save!=='draft'&&state.save!=='failure')return;state.editing=true;state.error='';render()}
+function updateDraft(){const profile=$('edit-profile').value,note=$('edit-note').value.trim();if(!profiles[profile]||!note||note.length>200){state.error='Vui lòng chọn hồ sơ và nhập ghi chú từ 1–200 ký tự.';render();return}state.profile=profile;state.note=note;state.save='draft';state.editing=false;state.error='';render()}
+function cancelSave(){if(!['draft','failure'].includes(state.save))return;state.save='cancelled';state.editing=false;render()}
+function confirmSave(){if(!['draft','failure'].includes(state.save)||state.editing)return;const outcome=$('save-result').value;state.submitted={profile:state.profile,note:state.note};state.request='REQ-DEMO-'+String(session)+'-'+String(timers.length+1);state.save='saving';render();later(()=>{state.save=outcome==='success'?'saved':outcome==='failure'?'failure':'unknown';render()},outcome==='timeout'?10000:2000)}
+function allergyHTML(){const p=profiles[state.profile];let h='<p>Hãy kiểm tra người cần ghi nhận, nội dung và hồ sơ trước khi lưu.</p><div class="card">'+mark('C')+'<strong>Thông tin khách tự báo</strong><div class="row"><span>Người cần lưu</span><b>'+esc(p.name)+'</b></div><div class="row"><span>Hồ sơ đích</span><b>'+esc(p.id)+'</b></div><div class="row"><span>Ghi chú</span><b>'+esc(state.note)+'</b></div><div class="row"><span>Mục đích</span><b>Ghi chú hỗ trợ tư vấn sau</b></div><p class="muted">Thông tin do khách cung cấp, chưa được xác minh chuyên môn.</p>';
+if(state.editing){h+='<form id="edit-form"><label for="edit-profile">Người và hồ sơ cần lưu</label><select id="edit-profile">'+Object.entries(profiles).map(([k,p])=>'<option value="'+k+'" '+(state.profile===k?'selected':'')+'>'+esc(p.name)+' · '+p.id+'</option>').join('')+'</select><label for="edit-note">Nội dung ghi chú</label><input id="edit-note" maxlength="200" required value="'+esc(state.note)+'"><p class="validation" role="alert">'+esc(state.error)+'</p><div class="actions"><button type="submit" class="primary">Cập nhật thẻ</button><button type="button" data-action="cancel-edit">Bỏ chỉnh sửa</button></div></form>'}
+else if(['draft','failure'].includes(state.save))h+='<div class="actions"><button class="primary" data-action="save">'+(state.save==='failure'?'Thử lưu lại':'Xác nhận lưu')+'</button><button data-action="edit">Sửa thông tin</button><button data-action="cancel-save">Không lưu</button></div>';
+h+='</div>';
+const labels={draft:'Chưa lưu',saving:'Đang lưu — chưa xác nhận thành công',saved:'Đã lưu',failure:'Lưu thất bại — hệ thống xác nhận chưa ghi',unknown:'Chưa xác định kết quả',cancelled:'Không lưu — chưa gửi yêu cầu ghi'};
+h+='<div class="status '+(state.save==='saved'?'success':state.save==='failure'?'error':'')+'">'+mark('D')+'<strong>'+labels[state.save]+'</strong>';
+if(state.request)h+='<div class="compact">Mã yêu cầu: '+esc(state.request)+'</div>';
+if(state.save==='saved')h+='<p>Đã lưu ghi chú “'+esc(state.submitted.note)+'” vào hồ sơ '+esc(profiles[state.submitted.profile].id)+'.</p><p class="compact">Khi được tư vấn, bạn vẫn nên nhắc lại thông tin dị ứng.</p>';
+if(state.save==='failure')h+='<p>Chưa lưu được thông tin. Bạn có thể thử lại hoặc nhờ dược sĩ hỗ trợ.</p>';
+if(state.save==='unknown')h+='<p>Mình chưa nhận được xác nhận lưu từ hệ thống nên chưa biết thông tin đã được ghi hay chưa. Bạn có thể chuyển dược sĩ kiểm tra.</p>';
+if(['failure','unknown','saved'].includes(state.save)&&state.transfer==='idle')h+='<div class="actions"><button data-action="handoff">'+(state.save==='saved'?'Báo lưu sai thông tin — nhờ dược sĩ':'Chuyển dược sĩ kiểm tra')+'</button></div>';
+h+='</div>';if(state.transfer!=='idle')h+='<p class="compact">Thông tin bàn giao: '+esc(p.id)+' · '+esc(state.note)+' · '+esc(state.request||'chưa có mã')+'. Chuyển ca không đồng nghĩa hồ sơ đã được sửa hoặc xóa.</p>'+transferHTML();return h}
+function render(){let h='';if(state.scenario==='2'){h=user('Con mình 3 tuổi đang sốt cao 39.5 độ, li bì, cho mình thuốc hạ sốt loại mạnh.');h+=message('<span class="badge">Cảnh báo tự động · Không gợi ý sản phẩm</span><div class="card danger">'+mark('A')+'<h2>Cần đi cấp cứu ngay</h2><p>Bạn có nhắc bé 3 tuổi đang sốt cao và li bì. Đây là dấu hiệu nguy hiểm cần được khám ngay.</p><p><b>Hãy đưa bé đi cấp cứu hoặc gọi cấp cứu ngay; đừng chờ phản hồi trong cuộc chat này.</b></p><p class="muted">Căn cứ: “3 tuổi”, “39.5 độ”, “li bì” trong tin nhắn của bạn.</p></div>'+transferHTML())}
+else if(state.scenario==='8'){h=user('Lưu lại giúp mình là mình bị dị ứng Ibuprofen nhé, sau đừng kê.');h+=message(allergyHTML())}
+else h=message('Xin chào! Bạn cần hỏi thuốc cho bản thân hay người nhà? Chọn một ca ở bảng demo để bắt đầu.');$('chat').innerHTML=h}
+$('scenario2').addEventListener('click',()=>start('2'));$('scenario8').addEventListener('click',()=>start('8'));$('reset').addEventListener('click',()=>reset());$('markers').addEventListener('change',e=>document.body.classList.toggle('hide-markers',!e.target.checked));
+$('chat').addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;const a=b.dataset.action;if(a==='save')confirmSave();if(a==='edit')edit();if(a==='cancel-edit'){state.editing=false;state.error='';render()}if(a==='cancel-save')cancelSave();if(a==='handoff')handoff()});
+$('chat').addEventListener('submit',e=>{if(e.target.id==='edit-form'){e.preventDefault();updateDraft()}});
+reset();
+</script>
+</body></html>
