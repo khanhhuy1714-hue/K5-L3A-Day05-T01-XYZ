@@ -106,15 +106,82 @@
   - Khi bộ lọc phát hiện cờ đỏ (nhi khoa, thai kỳ, triệu chứng cấp cứu, thuốc kê đơn), hệ thống **khóa cứng (disable) API của tool `goi_y_san_pham` và `ban_thuoc_ke_don`** ở tầng code[cite: 6]. Lúc này, dù LLM có cố tình sinh ra câu chữ gợi ý thuốc, giao diện UI cũng không thể render ra thẻ sản phẩm hay nút đặt hàng, bắt buộc luồng UI phải chuyển sang giao diện cảnh báo hoặc hàng chờ dược sĩ[cite: 5, 6].
 
 ## §4. Mức tự chủ  (chặng 4)
-Với mỗi tool:
-- Mức của nhóm (tự làm / cần người duyệt / cấm). Nếu cần người duyệt: ai duyệt · người duyệt thấy gì · quá hạn thì sao.
-- Lý do theo cost-of-error: sai thì ai chịu gì · đảo lại được không · chờ người thì mất gì.
-- Phương án đã cân nhắc và vì sao loại.
-Thêm:
-- Tool khó xếp nhất: mỗi người từng chọn gì, cái giá của mỗi phía (trỏ về kịch bản ở §2), nhóm chốt thế nào.
-- Thử mức đã đặt trên 2 kịch bản đắt nhất + 1 kịch bản bình thường: cái sai có bị chặn không? còn việc nào làm khi lẽ ra phải hỏi? người dùng bình thường có phải chờ vô ích không?
-- Luật thêm hoặc tool tách bước (nếu có), và vì sao.
-- Một mức tự chủ đã đổi lời hứa nào với người dùng.
+
+> **Cơ sở thiết kế:** Bảng tool và rubric riêng của T1 xác định hậu quả của từng hành động; §2–§3 xác định tình huống cần chặn và trải nghiệm thay thế. Các quyết định dưới đây đáp ứng chặng 4 của Guide và năm tiêu chí R4 của Rubric. Các mốc chờ là giả định cho bài lab, chưa phải cam kết vận hành của Pharmacity; phần thử là đối chiếu luồng bằng dữ liệu dựng, chưa chạy tool hay prototype.
+
+### 4.1. Mức cho từng tool và cái giá khi sai
+
+| Tool | Mức trong bản thiết kế | Sai thì ai chịu gì, đảo lại được không? | Chờ người thì mất gì; vì sao chọn mức này và loại mức khác? |
+|---|---|---|---|
+| `goi_y_san_pham` | **Cần người duyệt — dược sĩ trực online** | Tool gửi thẳng cho khách gợi ý kèm nút đặt. Nếu nhầm người dùng thuốc hoặc bỏ sót thai kỳ như KB #1, #5, người uống chịu rủi ro sức khỏe; gỡ thẻ không đảo được hậu quả khi thuốc đã dùng. | Khách hỏi thuốc thông thường phải chờ thêm một lượt chuyên môn. Chấp nhận cái giá này để dược sĩ kiểm tra trước khi khách thấy gợi ý. Loại **tự làm** vì khách bấm đặt không chứng minh sản phẩm phù hợp; loại **cấm toàn bộ** vì vẫn cần đường gửi gợi ý đã được dược sĩ duyệt cho ca phù hợp. |
+| `chuyen_duoc_si` | **Tự làm** | Chuyển nhầm làm khách chờ và tăng việc cho dược sĩ; có thể đổi lại luồng, mất vài phút theo fixture T1. Chuyển thiếu ở KB #5 lại để AI tiếp tục tư vấn vượt phạm vi. | Nếu việc chuyển cũng phải chờ duyệt thì thêm một hàng chờ trước khi gặp đúng người. Loại **cần duyệt** và **cấm** vì làm chậm đường xử lý chuyên môn; cho AI tự chuyển kèm lý do và dữ kiện gốc. |
+| `khuyen_di_kham` | **Tự làm khi có dấu hiệu nguy hiểm** | Cảnh báo thừa có thể gây lo lắng, tốn công đi khám; khách có thể bỏ qua thông báo. Bỏ sót hoặc báo chậm ở KB #2 có thể làm chậm việc tiếp cận cấp cứu, hậu quả khó đảo. | Chờ dược sĩ duyệt cảnh báo có thể gây hại ngay trong lúc chờ. Loại **cần duyệt** và **cấm**; hiện cảnh báo ngay theo dấu hiệu trong tin nhắn, không chờ hoàn tất sàng lọc hoặc có người nhận chat. |
+| `luu_ghi_chu_suc_khoe` | **Cần người duyệt — khách đồng ý đúng nội dung và hồ sơ** | Ghi nhầm dị ứng ở KB #8 có thể làm sai thông tin dùng cho lần sau; lưu không được đồng ý xâm phạm riêng tư. Xóa được ghi chú nhưng không thu hồi được thông tin đã lộ. | Một bước xác nhận khi nội dung hoặc quyền lưu chưa rõ làm chậm việc lưu, không chặn tư vấn trong phiên. Loại **tự lưu** vì kể bệnh không đồng nghĩa đồng ý lưu; loại **cấm** vì KB #8 có nhu cầu ghi nhớ rõ ràng và có thể cho khách kiểm soát nội dung. |
+| `ban_thuoc_ke_don` | **Cấm đối với AI** | Bán sai thuốc ở KB #3 hoặc tự đổi thuốc mạn tính ở KB #7 có thể gây hại cho người dùng; thuốc đã dùng thì không đảo được. Fixture T1 không cung cấp đơn thuốc đã thẩm định hoặc quy trình cấp phát để AI căn cứ thực hiện giao dịch. | Khách phải chuyển sang dược sĩ và quy trình chuyên môn, có thể mất thêm thời gian. Loại **tự làm** vì thiếu căn cứ; loại **cần người duyệt** cho chính tool này vì một lần xác nhận chưa đủ kiểm soát quy trình bán thuốc kê đơn ngoài phạm vi §1. Kể cả khách nói đã có đơn, AI vẫn không gọi tool này hoặc gợi ý thuốc thay thế; dược sĩ tiếp nhận ca để xử lý theo quy trình riêng. |
+
+**Căn cứ chọn:** T1 ghi `goi_y_san_pham` và `ban_thuoc_ke_don` không đảo được khi thuốc đã dùng; chuyển dược sĩ đảo được nhưng tốn vài phút; ghi chú xóa được nhưng vẫn có rủi ro lộ. Mục “Sản phẩm thật hôm nay” cũng tách câu thông tin khỏi câu chuyên môn: câu hỏi thuốc gì, dùng thế nào được chuyển dược sĩ.
+
+### 4.2. Người duyệt thấy gì và quá hạn thì sao?
+
+**Với `goi_y_san_pham`:**
+
+- **Ai duyệt:** Dược sĩ trực online, không dùng nút “Đặt mua” của khách làm bước duyệt chuyên môn.
+- **Thấy trước khi duyệt:** Tin nhắn gốc; người nhắn và người sẽ dùng thuốc; tuổi, tình trạng mang thai/cho con bú, thuốc đang dùng, bệnh mạn tính, dị ứng, thời gian triệu chứng và thuốc đã tự dùng. Mục chưa biết phải ghi “chưa có thông tin”. Bản nháp nêu sản phẩm dự kiến, căn cứ thông tin sản phẩm và lý do chuyển dược sĩ; thiếu căn cứ thì không được phát hành gợi ý.
+- **Cách duyệt:** Có nút **[Sửa bản nháp]**, **[Duyệt và gửi]**, **[Không gửi — tiếp nhận tư vấn]**. Tool chỉ gửi đúng nội dung đã duyệt; đổi sản phẩm hoặc dữ kiện người dùng thuốc thì phải duyệt lại. Với KB #2, #5, khóa nhánh AI tạo/gửi gợi ý; dược sĩ tiếp nhận tư vấn trực tiếp.
+- **Quá hạn:** Mốc giả định là **2 phút** chưa có người duyệt. Giữ gợi ý và nút đặt ở trạng thái khóa; báo “Chưa có dược sĩ duyệt gợi ý này” và cho khách tiếp tục chờ hoặc liên hệ nhà thuốc qua kênh hỗ trợ chính thức. Không tự duyệt khi hết giờ. Nếu xuất hiện dấu hiệu nguy hiểm, hiện cảnh báo ngay, không tiếp tục giữ khách trong hàng chờ.
+
+**Với `luu_ghi_chu_suc_khoe`:**
+
+- **Ai duyệt:** Khách xác nhận nội dung và đúng hồ sơ được phép ghi. Không mặc định lưu bệnh của người nhà vào hồ sơ người đang chat.
+- **Thấy trước khi duyệt:** Thẻ ghi chú, ví dụ **“Khách tự khai: dị ứng Ibuprofen”**, hồ sơ nhận ghi chú và mục đích dùng cho các lần tư vấn sau; có **[Đồng ý lưu]**, **[Sửa]**, **[Không lưu]**. Chỉ lưu phần được đồng ý, không tự lưu toàn bộ cuộc chat hay biến lời tự khai thành chẩn đoán đã kiểm chứng.
+- **Không hỏi lặp vô ích:** Câu “Lưu lại giúp mình là mình bị dị ứng Ibuprofen” ở KB #8 đã thể hiện yêu cầu lưu. Nếu nội dung và hồ sơ đích đã rõ thì thực hiện đúng yêu cầu đó; chỉ hỏi lại phần còn mơ hồ, không tự mở rộng phạm vi lưu.
+- **Không phản hồi/quá hạn:** Đóng thẻ hoặc kết thúc phiên mà chưa đồng ý thì hủy yêu cầu ghi; im lặng không phải đồng ý. Chỉ hiện “Đã lưu” sau khi tool trả thành công. Nếu tool xác nhận ghi thất bại thì báo chưa lưu; nếu mất phản hồi thì báo “Chưa xác nhận được việc lưu”, không khẳng định đã lưu hoặc chưa lưu và không tự gọi lại có thể gây ghi trùng.
+
+**Với hai tool tự làm:**
+
+- `chuyen_duoc_si`: Phân biệt **“Đang chuyển”**, **“Đã gửi yêu cầu”** và **“Dược sĩ đã nhận”** theo kết quả thực tế. Nếu sau **2 phút giả lập** chưa có người nhận, hiện “Chưa có dược sĩ nhận cuộc chat”, cho khách tiếp tục chờ, hủy yêu cầu hoặc liên hệ nhà thuốc qua kênh hỗ trợ chính thức. Không tự chuyển ngược sang AI tư vấn thuốc và không hứa thời gian nhận ca khi chưa có dữ liệu hàng chờ.
+- **Ca khẩn KB #2:** Khởi tạo chuyển ưu tiên ngay cùng lúc hiện cảnh báo. “Ngay” là thời điểm kích hoạt yêu cầu trong thiết kế, không bảo đảm dược sĩ đã nhận ở giây 0. Nếu chuyển lỗi hoặc chưa có người nhận, cảnh báo vẫn hiện và khách được hướng dẫn đi cấp cứu ngay, không chờ hết mốc 2 phút.
+- **Ca KB #5:** Khoảng 5 giây sửa thẻ tóm tắt trong §3 không phải bước xin phép lưu hồ sơ: nếu khách chưa sửa, gửi kèm nhãn “Tóm tắt chưa được khách xác nhận”, cho sửa tiếp sau đó. Câu “đã chuyển” ở §3 chỉ dùng sau khi tool xác nhận chuyển thành công.
+- `khuyen_di_kham`: Hiện cảnh báo độc lập với kết quả chuyển dược sĩ. Khách có thể đóng thẻ cảnh báo hoặc hủy yêu cầu chuyển; các thao tác này không mở lại quyền AI gợi ý thuốc cho ca rủi ro.
+
+### 4.3. Tool khó xếp nhất: `goi_y_san_pham`
+
+| Phương án cân nhắc | Cái giá của phương án, trỏ về §2 | Quyết định trong bản thiết kế |
+|---|---|---|
+| **Tự làm** sau khi hỏi sàng lọc | KB #1 được trả lời nhanh, giảm việc cho dược sĩ. Tuy nhiên, thiếu hoặc hiểu sai thông tin người dùng thuốc có thể đưa KB #5 sang nhánh mua thuốc; nút đặt khiến khách có thể hành động ngay. | Loại: chưa có căn cứ cho rằng câu hỏi sàng lọc và dữ liệu dựng đủ thay bước kiểm tra chuyên môn. |
+| **Cần dược sĩ duyệt** | Chặn gợi ý trước khi đến khách, nhưng KB #1 phải chờ thêm và dược sĩ tăng tải. Nếu áp dụng nhầm việc chờ này cho cả cảnh báo ở KB #2 thì lại gây hại. | Chọn cho việc gửi gợi ý sản phẩm; tách cảnh báo và chuyển người để hai việc này tự chạy ngay. |
+| **Cấm hoàn toàn tool gửi gợi ý** | Tránh được AI tự gửi thuốc sai, nhưng mất cả khả năng gửi một gợi ý đã được dược sĩ kiểm tra cho ca phù hợp. | Loại lệnh cấm toàn bộ; giữ quyền gửi có duyệt, đồng thời khóa riêng ca nguy hiểm, đối tượng cần chuyên môn và thuốc kê đơn. |
+
+**Phương án chọn trong bản thiết kế:** Cần dược sĩ duyệt trước khi gửi. Tách bước chuẩn bị bản nháp nội bộ khỏi bước phát hành; không gọi `goi_y_san_pham` để “soạn nháp” vì tool gốc gửi ngay cho khách. Bản nháp không hiện ở phía khách và không có nút đặt hoạt động. Cách tách này chặn việc gửi nháp ngay ở KB #1, đồng thời giữ nhánh gợi ý bị khóa ở KB #2, #5 như §3.
+
+**Lựa chọn độc lập của từng thành viên:** Chưa có dữ liệu thảo luận được cung cấp cho Trần Hoàng Phát, Phạm Hồng Khánh Huy và Trương Văn Thông. Nhóm cần bổ sung lựa chọn ban đầu thực tế và lý do của từng người trước khi nộp; bảng trên là phân tích phương án đề xuất, không phải biên bản ý kiến cá nhân.
+
+### 4.4. Luật bổ sung và tool đề xuất thêm
+
+1. **Ưu tiên dấu hiệu nguy hiểm trước mọi yêu cầu khác.** Đọc toàn bộ tin nhắn, kể cả khi khách gộp hỏi hàng với triệu chứng. Với KB #2, gọi `khuyen_di_kham` và `chuyen_duoc_si` ngay; không hỏi cân nặng, không đợi duyệt thuốc, không gửi sản phẩm kèm cảnh báo. Tool `khuyen_di_kham` chỉ hiện thông báo; không được nói hệ thống đã gọi cấp cứu thay khách.
+2. **Chưa đủ thông tin người sẽ dùng thuốc thì hỏi, không đoán.** Với KB #1, hỏi các mục sàng lọc của rubric T1; khách không muốn trả lời thì chuyển dược sĩ. Trẻ nhỏ, người cao tuổi, người mang thai/cho con bú, người có bệnh mạn tính hoặc đang dùng thuốc kê đơn chuyển dược sĩ; triệu chứng kéo dài hay đã tự dùng thuốc nhiều ngày không đỡ cũng chuyển. Không tự nói liều, không dùng sản phẩm khác để lách lệnh cấm thuốc kê đơn.
+3. **Kiểm soát tại nơi gọi tool và nơi hiện thẻ.** Chỉ cho gửi gợi ý đúng phiên, đúng dữ kiện và đã được dược sĩ duyệt; chưa phân loại được rủi ro thì giữ quyền gửi ở trạng thái khóa. Một câu “chỉ tham khảo” hoặc khách thúc giục không được thay bước duyệt. Việc khóa quyền không bảo đảm AI luôn nhận diện đúng dấu hiệu; khả năng nhận diện còn phải kiểm chứng ở prototype.
+4. **Đề xuất thêm `tra_cuu_thong_tin_san_pham` — mức tự làm, chỉ đọc.** Bộ 5 tool gốc không có tool kiểm tra tồn kho, nên không được giả vờ đã kiểm tra ở KB #6. Tool mới chỉ trả thông tin hàng hóa/tồn kho từ nguồn được chỉ định, không chọn thuốc theo triệu chứng, không gửi nút đặt và không tạo giao dịch. Sai thì khách có thể mất công đến chi nhánh; có thể sửa câu trả lời nhưng không lấy lại thời gian đã mất. Vì vậy phải hỏi rõ sản phẩm và khu vực/chi nhánh, hiện nguồn và thời điểm cập nhật; thiếu dữ liệu thì nói chưa kiểm tra được. Loại **cần dược sĩ duyệt** cho bước đọc thông tin vì không thêm đánh giá chuyên môn mà vẫn làm khách chờ; loại **cấm** vì mất đường xử lý nhanh câu hỏi thông tin thông thường.
+
+**Fixture đề xuất cho tool tra cứu (hoàn toàn dựng, chưa phải dữ liệu tồn kho thật):** `SP-DEMO-01 | Nước muối sinh lý mẫu A | Chi nhánh DEMO-A, khu vực A | Còn 12 chai | Cập nhật 20:00, giờ giả lập | Nguồn: fixture nhóm dựng`. Chỉ dùng dòng này sau khi khách chọn đúng sản phẩm và chi nhánh. Đề xuất này không bổ sung quyền xác nhận hiệu quả điều trị, giữ hàng hoặc bảo đảm còn hàng khi khách đến.
+
+### 4.5. Thử mức trên 2 ca đắt nhất và 1 ca bình thường
+
+**Cách thử:** Đi theo từng điều kiện và quyền gọi tool trên ba tin nhắn ở §2. Kết quả dưới đây là kết quả đối chiếu quy tắc trên giấy, chưa phải kết quả chạy thử hệ thống.
+
+| Ca thử | AI làm gì, khách thấy gì? | Cái sai ở §2 có bị chặn theo quy tắc không? | Còn làm khi lẽ ra phải hỏi không? | Có phải chờ vô ích không? |
+|---|---|---|---|---|
+| **KB #2 — Trẻ 3 tuổi, sốt 39.5°C, li bì** | Hiện cảnh báo ngay qua `khuyen_di_kham`, khởi tạo `chuyen_duoc_si` ưu tiên; ẩn gợi ý và nút đặt. Khách thấy hướng đi cấp cứu cùng trạng thái chuyển thực tế. | **Có:** nhánh gửi thuốc bị khóa; lỗi chuyển dược sĩ cũng không chặn việc hiện cảnh báo. | Không bắt hỏi thêm trước cảnh báo vì tin đã có dấu hiệu nguy hiểm. Không tự gọi cấp cứu, kê liều hay lưu bệnh vào hồ sơ. | Không chờ duyệt hoặc đợi dược sĩ nhận ca mới được hướng dẫn đi cấp cứu. |
+| **KB #5 — Mang thai 3 tháng, cảm/sổ mũi 2 hôm** | Khóa gợi ý thuốc của AI, gọi `chuyen_duoc_si`; hiện lý do và thẻ tóm tắt có **[Sửa thông tin]**. Chuyển bản chưa xác nhận phải gắn nhãn rõ. | **Có:** AI không gửi thuốc cảm “an toàn cho thai kỳ” hoặc nút mua trước dược sĩ. | Không tự suy diễn thuốc phù hợp; không lưu thai kỳ vào hồ sơ. Dược sĩ tiếp tục hỏi phần cần thiết. | Có chờ chuyên môn, đây là bước bảo vệ cần thiết; không hỏi cả loạt câu trước khi chuyển. Không tự hiện cảnh báo cấp cứu chỉ vì đang mang thai. |
+| **KB #6 — Hỏi nước muối còn ở chi nhánh gần mình** | Hỏi rõ sản phẩm và khu vực/chi nhánh. Với đầu vào thử tiếp theo “SP-DEMO-01, chi nhánh DEMO-A”, tool tra cứu đề xuất trả dòng fixture, kèm nguồn và giờ giả lập; không có nút đặt. | **Có:** không đoán vị trí hoặc nói “còn hàng” khi chưa có dữ liệu tương ứng. Nếu chưa có tool/fixture, trả lời chưa kiểm tra được tồn kho. | Không tự chọn chi nhánh, không hỏi bệnh hay lưu sức khỏe cho một yêu cầu chỉ tra cứu hàng hóa. | Không chờ dược sĩ duyệt kết quả đọc dữ liệu. Một lượt làm rõ sản phẩm/chi nhánh là cần thiết để tránh trả nhầm. |
+
+**Giới hạn còn lại:** Ba ca trên cho thấy các quyền đã đặt nhất quán với luồng dự kiến, chưa chứng minh bộ nhận diện phát hiện được mọi cách diễn đạt. Cần kiểm tra thêm ca lạ, tin gộp hai yêu cầu và trạng thái chuyển/duyệt lỗi trên prototype ở §5.
+
+### 4.6. Mức tự chủ thay đổi lời hứa với khách
+
+- **Lời hứa bị loại:** “AI chọn thuốc phù hợp cho bạn và cho đặt ngay.” Lời này vượt quá khả năng kiểm chứng của dữ liệu dựng và cho phép hành động khó đảo trước khi có chuyên môn.
+- **Lời hứa ứng với mức đã chọn:** “Trợ lý AI giúp làm rõ thông tin và kết nối dược sĩ. Gợi ý thuốc chỉ được gửi sau khi dược sĩ duyệt; khi có dấu hiệu nguy hiểm, cảnh báo được hiện ngay để bạn không phải chờ tư vấn thuốc. Thông tin sức khỏe chỉ được lưu vào hồ sơ khi bạn đồng ý.”
+- **Thay đổi cụ thể:** `goi_y_san_pham` cần duyệt nên không hứa có thuốc ngay; `khuyen_di_kham` tự làm nên không bắt chờ duyệt cảnh báo. Trong mọi nhánh, chỉ báo một việc đã hoàn tất sau khi có kết quả xác nhận tương ứng.
 
 ## §5. Prototype  (chặng 5)
 - Link hoặc file · công cụ · phần nào mock · có lời gọi AI thật không.
