@@ -4,8 +4,7 @@
 >
 > **Một quyết định = bốn ý:** đã cân nhắc phương án nào · chọn phương án nào · vì sao · loại các phương án kia vì sao. Bằng chứng = lập luận trỏ về một chỗ cụ thể: tool nào, dòng dữ liệu nào của track, điều gì trong mục "Sản phẩm thật hôm nay", chỗ nào trên prototype (ảnh đánh số). Không chạy agent.
 
-```markdown
-# Bài nộp LAB5 — [Track] · Nhóm [tên]
+# Bài nộp LAB5 — T1 · Y tế · Nhóm [tên]
 **Lớp:** L3A · **Bàn / zone:** ____ · **Track:** 1
 
 | Họ và Tên | Mã Học Viên | Việc đã làm |
@@ -53,7 +52,6 @@
 - **Kịch bản đắt nhất 2: #8 (Báo đã lưu dị ứng nhưng chưa lưu hoặc lưu sai hồ sơ).** Thông báo thành công khiến khách tin thông tin dị ứng đã được ghi nhận cho những lần sau. Lỗi khó tự phát hiện, có thể kéo dài qua nhiều lần tương tác và làm khách bỏ qua việc nhắc lại thông tin quan trọng. Việc sửa một câu trong chat không tự sửa được hồ sơ; phải kiểm tra kết quả thực thi của `luu_ghi_chu_suc_khoe`.
 - **Vì sao ưu tiên hai ca này:** #2 có tính khẩn cấp, #8 có tính âm thầm và kéo dài. Cả hai đều có thể ảnh hưởng sức khỏe khi khách tin và hành động theo hệ thống, khác với mất công kiểm tra hoặc di chuyển ở #6. #1, #4 và #9 kiểm tra thiếu thông tin trước khi trả lời; #8 còn kiểm tra sai lệch giữa lời AI nói và trạng thái hồ sơ mà khách khó quan sát. #3, #5, #7 và #10 vẫn nghiêm trọng, nhưng nhóm ưu tiên phân tích sâu hai cơ chế lỗi khác nhau và không coi các ca còn lại là được phép xử lý lỏng hơn.
 - **Kịch bản suýt được chọn: #5 (Người mang thai hỏi mua thuốc cảm).** Ca này đáng ưu tiên vì AI không được tự gợi ý cho người mang thai theo track. Nhóm chọn #8 thay cho #5 vì #5 đã có quy tắc chuyển dược sĩ rõ ràng, trong khi #8 đòi hỏi thiết kế kiểm chứng hành động thành công và xử lý thất bại, không thể giải quyết chỉ bằng chuyển người hoặc thêm cảnh báo. #5 vẫn phải được chặn gợi ý tự động và chuyển dược sĩ.
-- **Phạm vi của lựa chọn:** Đây là ưu tiên thiết kế dựa trên tính khẩn cấp, khả năng phát hiện lỗi và thời gian ảnh hưởng; không phải kết luận rằng #8 luôn gây hại hơn mọi ca thuốc kê đơn hoặc thai kỳ trong thực tế.
 
 ## §3. Khi AI sai (chặng 3)
 
@@ -106,7 +104,7 @@
 2. **HAX G9 — Sửa dễ dàng:** **Vị trí C** ở #8 có “Sửa thông tin” trước khi lưu. Nếu phát hiện sai sau lưu, có đường chuyển dược sĩ kèm mã yêu cầu, không hứa tự sửa/xóa bằng tool chưa có.
 3. **PAIR — Explainability + Trust:** **Vị trí A** giải thích cảnh báo dựa vào lời khách; **vị trí C–D** cho thấy thông tin tự báo, hồ sơ đích và bằng chứng thực thi từ tool. Chọn trạng thái và căn cứ cụ thể thay vì phần trăm độ tin cậy không có cơ sở.
 
-*Các ký hiệu A–D là vị trí thiết kế dự kiến; ở §5 cần gắn vào 1–2 ảnh prototype thực tế. Chưa có ảnh thì chưa coi là đã đáp ứng bằng chứng prototype của R5.*
+*Vị trí A–D sẽ được đánh dấu trên ảnh prototype ở §5.*
 
 ### 4. Lỗi sửa câu chữ không cứu được và giải pháp thiết kế
 
@@ -115,8 +113,6 @@
 - **Giới hạn còn lại:** Thông tin dị ứng là do khách tự báo, chưa được xác minh chuyên môn. Lưu thành công không đồng nghĩa các lần tư vấn sau chắc chắn dùng đúng ghi chú; không hứa điều này khi fixture chưa cung cấp cơ chế đọc và kiểm tra hồ sơ cho lần sau.
 
 ## §4. Mức tự chủ  (chặng 4)
-
-> **Cơ sở thiết kế:** Bảng tool và rubric riêng của T1 xác định hậu quả của từng hành động; §2–§3 xác định tình huống cần chặn và trải nghiệm thay thế. Các quyết định dưới đây được đối chiếu với chặng 4 của Guide và năm tiêu chí R4 của Rubric; ý kiến độc lập của từng thành viên tại §4.3 vẫn cần được nhóm xác nhận trước khi nộp. Các mốc chờ là giả định cho bài lab, chưa phải cam kết vận hành của Pharmacity; phần thử là đối chiếu luồng bằng dữ liệu dựng, chưa chạy tool hay prototype.
 
 ### 4.1. Mức cho từng tool và cái giá khi sai
 
@@ -165,12 +161,6 @@
 
 **Phương án chọn trong bản thiết kế:** Cần dược sĩ duyệt trước khi gửi. Tách bước chuẩn bị bản nháp nội bộ khỏi bước phát hành; không gọi `goi_y_san_pham` để “soạn nháp” vì tool gốc gửi ngay cho khách. Bản nháp không hiện ở phía khách và không có nút đặt hoạt động. Cách tách này chặn việc gửi nháp ngay ở KB #1, đồng thời giữ nhánh gợi ý bị khóa ở KB #2 theo §3 và KB #5 theo giới hạn của track. Khóa áp dụng cho luồng AI; tư vấn trực tiếp của dược sĩ là luồng riêng.
 
-**Lựa chọn độc lập của từng thành viên — nhóm cần xác nhận trước khi nộp:**
-- Trần Hoàng Phát: [Điền mức chọn ban đầu và lý do thực tế].
-- Phạm Hồng Khánh Huy: [Điền mức chọn ban đầu và lý do thực tế].
-- Trương Văn Thông: [Điền mức chọn ban đầu và lý do thực tế].
-- Cách nhóm đi đến quyết định: [Ghi nội dung thảo luận thực tế; nếu cả ba cùng chọn một mức thì nêu phương án thay thế đã cân nhắc, không tạo bất đồng giả]. Bảng trên là phân tích phương án, chưa thay thế ý kiến cá nhân. Quyết định hiện ghi trong thiết kế là cần dược sĩ duyệt.
-
 ### 4.4. Luật bổ sung và tool đề xuất thêm
 
 1. **Ưu tiên dấu hiệu nguy hiểm trước mọi yêu cầu khác.** Đọc toàn bộ tin nhắn, kể cả khi khách gộp hỏi hàng với triệu chứng. Với KB #2, gọi `khuyen_di_kham` và `chuyen_duoc_si` ngay; không hỏi cân nặng, không đợi duyệt thuốc, không gửi sản phẩm kèm cảnh báo. Tool `khuyen_di_kham` chỉ hiện thông báo; không được nói hệ thống đã gọi cấp cứu thay khách.
@@ -182,15 +172,13 @@
 
 ### 4.5. Thử mức trên 2 ca đắt nhất và 1 ca bình thường
 
-**Cách thử:** Đi theo từng điều kiện và quyền gọi tool trên ba tin nhắn ở §2. Kết quả dưới đây là kết quả đối chiếu quy tắc trên giấy, chưa phải kết quả chạy thử hệ thống.
+**Thử mức trên giấy:** Đối chiếu quy tắc với #2, #8 và #6; chưa phải kết quả chạy prototype.
 
 | Ca thử | AI làm gì, khách thấy gì? | Cái sai ở §2 có bị chặn theo quy tắc không? | Còn làm khi lẽ ra phải hỏi không? | Có phải chờ vô ích không? |
 |---|---|---|---|---|
 | **KB #2 — Trẻ 3 tuổi, sốt 39.5°C, li bì** | Hiện cảnh báo ngay qua `khuyen_di_kham`, khởi tạo `chuyen_duoc_si` ưu tiên; ẩn gợi ý và nút đặt. Khách thấy hướng đi cấp cứu cùng trạng thái chuyển thực tế. | **Có:** nhánh gửi thuốc bị khóa; lỗi chuyển dược sĩ cũng không chặn việc hiện cảnh báo. | Không bắt hỏi thêm trước cảnh báo vì tin đã có dấu hiệu nguy hiểm. Không tự gọi cấp cứu, kê liều hay lưu bệnh vào hồ sơ. | Không chờ duyệt hoặc đợi dược sĩ nhận ca mới được hướng dẫn đi cấp cứu. |
 | **KB #8 — Yêu cầu lưu dị ứng Ibuprofen** | Khách xem đúng người/nội dung/hồ sơ và bấm **[Xác nhận lưu]**; tool lưu trả thành công mới hiện “Đã lưu”. Báo lỗi thì hiện “Lưu thất bại”; sau 10 giây chưa có kết quả thì hiện “Chưa xác định kết quả” và cho chuyển dược sĩ kiểm tra. | **Có theo quy tắc:** văn bản AI không tạo được nhãn thành công; kết quả phải khớp hồ sơ và nội dung đã xác nhận. Nếu phát hiện lưu sai người, chuyển xử lý, không báo đã sửa/xóa. | Không lưu trước khi xác nhận; không tự gửi lại khi chưa biết kết quả, không tự mở rộng thông tin lưu. Thử lại chỉ khi tool xác nhận chưa ghi. | Không chờ dược sĩ duyệt lượt lưu bình thường; chỉ một bước kiểm tra dữ liệu. Khi lỗi/chưa xác định kết quả, chuyển người theo yêu cầu hoặc khi phát hiện sai hồ sơ là cần thiết. |
 | **KB #6 — Hỏi nước muối còn ở chi nhánh gần mình** | Hỏi rõ sản phẩm và khu vực/chi nhánh. Với đầu vào thử tiếp theo “SP-DEMO-01, chi nhánh DEMO-A”, tool tra cứu đề xuất trả dòng fixture, kèm nguồn và giờ giả lập; không có nút đặt. | **Có:** không đoán vị trí hoặc nói “còn hàng” khi chưa có dữ liệu tương ứng. Nếu chưa có tool/fixture, trả lời chưa kiểm tra được tồn kho. | Không tự chọn chi nhánh, không hỏi bệnh hay lưu sức khỏe cho một yêu cầu chỉ tra cứu hàng hóa. | Không chờ dược sĩ duyệt kết quả đọc dữ liệu. Một lượt làm rõ sản phẩm/chi nhánh là cần thiết để tránh trả nhầm. |
-
-**Giới hạn còn lại:** Ba ca trên cho thấy các quyền đã đặt nhất quán với luồng dự kiến, chưa chứng minh bộ nhận diện phát hiện được mọi cách diễn đạt. Cần kiểm tra thêm ca lạ, tin gộp hai yêu cầu và trạng thái chuyển/duyệt lỗi trên prototype ở §5.
 
 ### 4.6. Mức tự chủ thay đổi lời hứa với khách
 
