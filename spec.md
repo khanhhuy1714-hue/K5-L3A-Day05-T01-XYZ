@@ -6,11 +6,21 @@
 
 ```markdown
 # Bài nộp LAB5 — [Track] · Nhóm [tên]
-[Danh sách thành viên và việc mỗi người làm — copy bảng từ README]
+**Lớp:** L3A · **Bàn / zone:** ____ · **Track:** 1
+
+| Họ và Tên | Mã Học Viên | Việc đã làm |
+|---|---|---|
+| Trần Hoàng Phát | 2A202603536 |  |
+| Phạm Hồng Khánh Huy | 2A202603588 |  |
+| Trương Văn Thông | 2A202603560 |  |
 
 ## §1. Lát cắt & phạm vi
-- Lát cắt (chép từ track).
-- 3 việc tính năng KHÔNG làm, mỗi việc một câu vì sao.
+- Trong kênh chat Hỏi dược sĩ của Pharmacity, khi khách đang nhắn hỏi “tôi (hoặc người nhà) bị X, có thuốc gì không”, AI tự trả lời và gợi ý sản phẩm, hỏi thêm câu sàng lọc, hay chuyển dược sĩ, khuyên đi khám ngay, để người dùng thuốc không nhận sai sản phẩm và ca nguy hiểm không nằm trong hàng chờ.
+
+**Ba việc tính năng không làm**
+1. Không tự chỉ định hoặc điều chỉnh liều dùng, vì thông tin qua chat có thể chưa đầy đủ; câu hỏi về liều dùng cần chuyển dược sĩ.e
+2. Không bán thuốc kê đơn hoặc gợi ý thuốc thay thế cho thuốc kê đơn qua chat tự động, vì việc này vượt thẩm quyền của trợ lý AI trong bài lab.
+3. Không lưu thông tin sức khỏe vào hồ sơ khi khách chưa đồng ý, vì cung cấp thông tin để được tư vấn không đồng nghĩa với cho phép lưu trữ.
 
 ## §2. Kịch bản rủi ro (chặng 2)
 
