@@ -55,6 +55,8 @@
 - **Kịch bản suýt được chọn: #3 (Yêu cầu mua kháng sinh qua chat tự động).** Bán thuốc kê đơn hoặc gợi ý thuốc thay thế trái giới hạn của track và có thể gây hậu quả nghiêm trọng. Nhóm ưu tiên #2 và #5 để thể hiện hai luồng UX khác nhau; #3 vẫn phải bị chặn bằng mức cấm ở §4. Không dựa vào suy đoán về mức phạt hoặc hậu quả của một thuốc chưa được xác định để xếp hạng.
 - **Cân nhắc #9 và #10:** #9 kiểm tra tách đúng người dùng thuốc, #10 kiểm tra AI không bỏ qua giới hạn khi khách giục. Hai ca này dùng để thử độ bao phủ của thiết kế; không chọn phân tích sâu không có nghĩa được phép xử lý lỏng hơn.
 
+---
+
 ## §3. Khi AI sai (chặng 3)
 
 ### 1. Xử lý Kịch bản đắt nhất 1: Trẻ 3 tuổi sốt cao 39.5 độ, li bì (Kịch bản #2)
@@ -62,18 +64,18 @@
 - **AI nói gì (nguyên văn):** 
   > "⚠️ **CẢNH BÁO Y TẾ KHẨN CẤP:** Triệu chứng sốt cao 39.5°C kèm biểu hiện **li bì** ở trẻ 3 tuổi là dấu hiệu nguy hiểm cần được bác sĩ thăm khám ngay lập tức. Trợ lý AI không được phép gợi ý thuốc hạ sốt hay kê đơn trong trường hợp này. Ba mẹ vui lòng đưa bé đến cơ sở y tế gần nhất hoặc gọi cấp cứu 115 ngay."
 - **Người dùng thấy gì:** 
-  - Một thẻ cảnh báo viền đỏ nổi bật (không hiển thị bất kỳ thẻ gợi ý sản phẩm hay nút "Đặt mua" nào)[cite: 6].
-  - Nhãn định danh rõ ràng: *"Trợ lý ảo AI Pharmacity (Không thay thế chẩn đoán bác sĩ)"*[cite: 5].
-  - Hai nút hành động trực tiếp: **[Gọi cấp cứu 115]** (màu đỏ) và **[Tìm bệnh viện/phòng khám gần nhất]** (màu xanh)[cite: 6].
-  - Thanh trạng thái chuyển tiếp: *"Đã gửi cảnh báo khẩn cấp tới Dược sĩ trực ưu tiên"* (kèm bộ đếm thời gian phản hồi dự kiến < 1 phút)[cite: 6].
+  - Một thẻ cảnh báo viền đỏ nổi bật (không hiển thị bất kỳ thẻ gợi ý sản phẩm hay nút "Đặt mua" nào).
+  - Nhãn định danh rõ ràng: *"Trợ lý ảo AI Pharmacity (Không thay thế chẩn đoán bác sĩ)"*.
+  - Hai nút hành động trực tiếp: **[Gọi cấp cứu 115]** (màu đỏ) và **[Tìm bệnh viện/phòng khám gần nhất]** (màu xanh).
+  - Thanh trạng thái chuyển tiếp: *"Đã gửi cảnh báo khẩn cấp tới Dược sĩ trực ưu tiên"* (kèm bộ đếm thời gian phản hồi dự kiến < 1 phút).
 - **Người dùng làm gì tiếp:** Bấm gọi 115, xem bản đồ cơ sở y tế gần nhất để đưa trẻ đi cấp cứu ngay, hoặc bấm *"Tôi đã nắm thông tin, vẫn muốn chat với Dược sĩ"* nếu cần hướng dẫn sơ cứu tạm thời trong lúc di chuyển.
-- **Ai được báo, sau bao lâu:** **Dược sĩ trực online tuyến đầu** nhận được thông báo đẩy (push notification) kèm cờ đỏ (High-Priority Escalation) **ngay lập tức (0 giây)**, bỏ qua hàng chờ thông thường để chủ động nhắn tin hướng dẫn xử trí hạ sốt vật lý an toàn trong lúc chờ cấp cứu[cite: 6].
+- **Ai được báo, sau bao lâu:** **Dược sĩ trực online tuyến đầu** nhận được thông báo đẩy (push notification) kèm cờ đỏ (High-Priority Escalation) **ngay lập tức (0 giây)**, bỏ qua hàng chờ thông thường để chủ động nhắn tin hướng dẫn xử trí hạ sốt vật lý an toàn trong lúc chờ cấp cứu.
 - **Quyết định (Chọn gì, loại gì, vì sao):**
-  - **Chọn:** Dừng tư vấn thuốc và kích hoạt luồng cảnh báo khẩn cấp (`khuyen_di_kham`) + chuyển vượt cấp cho dược sĩ[cite: 4, 6].
-  - **Đã loại:** (1) *Hỏi lại thêm câu sàng lọc* (ví dụ: hỏi bé sốt mấy tiếng rồi, nặng bao nhiêu kg) -> Loại vì làm mất "thời gian vàng" cấp cứu của trẻ đang li bì[cite: 5]. (2) *Trả lời kèm giới hạn* (gợi ý Paracetamol kèm câu "nên đi khám") -> Loại vì phụ huynh đang hoảng loạn lúc nửa đêm sẽ bấm mua thuốc uống ngay thay vì đi viện, che lấp triệu chứng nguy hiểm[cite: 6].
+  - **Chọn:** Dừng tư vấn thuốc và kích hoạt luồng cảnh báo khẩn cấp (`khuyen_di_kham`) + chuyển vượt cấp cho dược sĩ.
+  - **Đã loại:** (1) *Hỏi lại thêm câu sàng lọc* (ví dụ: hỏi bé sốt mấy tiếng rồi, nặng bao nhiêu kg) -> Loại vì làm mất "thời gian vàng" cấp cứu của trẻ đang li bì. (2) *Trả lời kèm giới hạn* (gợi ý Paracetamol kèm câu "nên đi khám") -> Loại vì phụ huynh đang hoảng loạn lúc nửa đêm sẽ bấm mua thuốc uống ngay thay vì đi viện, che lấp triệu chứng nguy hiểm.
 - **Loại lỗi & Cách xử lý:** 
-  - **Loại lỗi:** **Lỗi ngữ cảnh (Context Error)** — AI vẫn nhận diện đúng từ khóa "sốt" và có sẵn dữ liệu thuốc hạ sốt trong hệ thống, nhưng áp dụng sai vào ngữ cảnh cấp cứu nhi khoa[cite: 5].
-  - **Cách nói & sửa theo loại:** Không xin lỗi vòng vo kiểu kỹ thuật ("Xin lỗi tôi chưa hiểu ý bạn"). Câu chữ phải dứt khoát, mang tính chỉ dẫn sinh tồn (ngắn gọn, in đậm từ khóa nguy hiểm) và khóa cứng giao diện mua hàng để chặn hành vi tự ý dùng thuốc[cite: 5, 6].
+  - **Loại lỗi:** **Lỗi ngữ cảnh (Context Error)** — AI vẫn nhận diện đúng từ khóa "sốt" và có sẵn dữ liệu thuốc hạ sốt trong hệ thống, nhưng áp dụng sai vào ngữ cảnh cấp cứu nhi khoa.
+  - **Cách nói & sửa theo loại:** Không xin lỗi vòng vo kiểu kỹ thuật ("Xin lỗi tôi chưa hiểu ý bạn"). Câu chữ phải dứt khoát, mang tính chỉ dẫn sinh tồn (ngắn gọn, in đậm từ khóa nguy hiểm) và khóa cứng giao diện mua hàng để chặn hành vi tự ý dùng thuốc.
 
 ---
 
@@ -82,41 +84,43 @@
 - **AI nói gì (nguyên văn):** 
   > "Chào chị, vì chị đang **mang thai 3 tháng đầu** (giai đoạn nhạy cảm của thai kỳ), trợ lý AI không thể tự ý gợi ý thuốc trị cảm sổ mũi do nhiều hoạt chất thông thường có thể ảnh hưởng đến thai nhi. Em đã chuyển thông tin của chị cho Dược sĩ chuyên môn để tư vấn giải pháp an toàn nhất ạ."
 - **Người dùng thấy gì:** 
-  - Hộp thoại thông báo màu vàng nhạt (mức độ thận trọng) nêu rõ lý do từ chối gợi ý thuốc[cite: 6].
-  - Thẻ tóm tắt thông tin AI đã trích xuất được để chuyển giao: *"Đối tượng: Phụ nữ mang thai (3 tháng) | Triệu chứng: Cảm, sổ mũi 2 ngày"* kèm nút **[Sửa thông tin]** (trường hợp AI nghe nhầm)[cite: 5].
-  - Nút hành động chính: **[Kết nối Dược sĩ trực ngay]** và một nút phụ tham khảo: **[Xem các biện pháp chăm sóc không dùng thuốc]** (ví dụ: xịt rửa mũi bằng nước muối sinh lý)[cite: 6].
+  - Hộp thoại thông báo màu vàng nhạt (mức độ thận trọng) nêu rõ lý do từ chối gợi ý thuốc.
+  - Thẻ tóm tắt thông tin AI đã trích xuất được để chuyển giao: *"Đối tượng: Phụ nữ mang thai (3 tháng) | Triệu chứng: Cảm, sổ mũi 2 ngày"* kèm nút **[Sửa thông tin]** (trường hợp AI nghe nhầm).
+  - Nút hành động chính: **[Kết nối Dược sĩ trực ngay]** và một nút phụ tham khảo: **[Xem các biện pháp chăm sóc không dùng thuốc]** (ví dụ: xịt rửa mũi bằng nước muối sinh lý).
 - **Người dùng làm gì tiếp:** Kiểm tra lại thẻ tóm tắt xem AI ghi nhận đúng số tháng thai kỳ chưa (bấm sửa nếu sai), sau đó chờ Dược sĩ vào chat trực tiếp (hoặc bấm xem hướng dẫn vệ sinh mũi bằng nước muối sinh lý trong lúc chờ).
 - **Ai được báo, sau bao lâu:** **Dược sĩ trực online** nhận được phiên chat kèm bản tóm tắt hồ sơ sàng lọc **sau 5 giây** (thời gian để khách kịp xác nhận/sửa thẻ tóm tắt nếu AI trích xuất sai).
 - **Quyết định (Chọn gì, loại gì, vì sao):**
-  - **Chọn:** Dừng gợi ý thuốc (`goi_y_san_pham` bị khóa), giải thích rõ giới hạn thẩm quyền và chuyển Dược sĩ (`chuyen_duoc_si`) kèm thẻ tóm tắt[cite: 4, 6].
-  - **Đã loại:** (1) *Gợi ý thuốc cảm thảo dược/an toàn kèm cảnh báo hỏi bác sĩ* -> Loại vì AI có thể ảo giác về độ an toàn của tá dược trong thai kỳ 3 tháng đầu, gây hậu quả dị tật thai nhi không thể đảo ngược[cite: 6]. (2) *Hỏi thêm hàng loạt câu sàng lọc (tiền sử bệnh, dị ứng, huyết áp...)* -> Loại vì dù khách trả lời thế nào thì kết cục cuối cùng vẫn bắt buộc phải chuyển Dược sĩ theo quy định an toàn y tế, hỏi thêm chỉ gây mệt mỏi cho thai phụ[cite: 6].
+  - **Chọn:** Dừng gợi ý thuốc (`goi_y_san_pham` bị khóa), giải thích rõ giới hạn thẩm quyền và chuyển Dược sĩ (`chuyen_duoc_si`) kèm thẻ tóm tắt.
+  - **Đã loại:** (1) *Gợi ý thuốc cảm thảo dược/an toàn kèm cảnh báo hỏi bác sĩ* -> Loại vì AI có thể ảo giác về độ an toàn của tá dược trong thai kỳ 3 tháng đầu, gây hậu quả dị tật thai nhi không thể đảo ngược. (2) *Hỏi thêm hàng loạt câu sàng lọc (tiền sử bệnh, dị ứng, huyết áp...)* -> Loại vì dù khách trả lời thế nào thì kết cục cuối cùng vẫn bắt buộc phải chuyển Dược sĩ theo quy định an toàn y tế, hỏi thêm chỉ gây mệt mỏi cho thai phụ.
 - **Loại lỗi & Cách xử lý:** 
-  - **Loại lỗi:** **Lỗi hệ thống / Giới hạn năng lực (System Limitation)** — Dữ liệu sản phẩm của AI chỉ dừng ở mức thông tin bán hàng cơ bản, không có năng lực thẩm định lâm sàng cho thai kỳ[cite: 5, 6].
-  - **Cách nói & sửa theo loại:** Minh bạch thẳng thắn về giới hạn của AI ngay từ câu đầu tiên, chuyển trọng tâm từ "bán thuốc" sang "kết nối chuyên gia" để giữ niềm tin và sự an tâm cho khách hàng[cite: 5].
+  - **Loại lỗi:** **Lỗi hệ thống / Giới hạn năng lực (System Limitation)** — Dữ liệu sản phẩm của AI chỉ dừng ở mức thông tin bán hàng cơ bản, không có năng lực thẩm định lâm sàng cho thai kỳ.
+  - **Cách nói & sửa theo loại:** Minh bạch thẳng thắn về giới hạn của AI ngay từ câu đầu tiên, chuyển trọng tâm từ "bán thuốc" sang "kết nối chuyên gia" để giữ niềm tin và sự an tâm cho khách hàng.
 
 ---
 
 ### 3. Áp dụng nguyên tắc HAX / PAIR (Trỏ vào vị trí cụ thể)
 
-1. **HAX G1 & G2 (Làm rõ hệ thống làm được gì và tốt đến đâu) + Luật AI 134/2025/QH15:**[cite: 5]
-   - *Vị trí trỏ tới:* Dòng nhãn định danh dưới tên bot và câu mở đầu trong cả 2 kịch bản (*"Trợ lý AI không được phép gợi ý thuốc hạ sốt..."* / *"Trợ lý AI không thể tự ý gợi ý thuốc..."*)[cite: 5].
-   - *Tác dụng:* Ngăn người dùng ngộ nhận AI là bác sĩ/dược sĩ thật, thiết lập kỳ vọng đúng ngay khi gặp ca khó[cite: 5].
-2. **HAX G10 (Thu hẹp phạm vi khi nghi ngờ / rủi ro cao):**[cite: 5]
-   - *Vị trí trỏ tới:* Cơ chế ẩn hoàn toàn thẻ sản phẩm và nút "Đặt mua" ở cả 2 kịch bản, chỉ giữ lại 2 nút hành động an toàn (`[Gọi cấp cứu 115]` ở KB #2 và `[Kết nối Dược sĩ trực ngay]` ở KB #5)[cite: 5, 6].
-   - *Tác dụng:* Khi rủi ro vượt ngưỡng an toàn, giao diện tự động thu hẹp quyền tự quyết của AI về mức tối thiểu (chỉ điều hướng, không thương mại)[cite: 5].
-3. **PAIR — Explainability + Trust & HAX G9 (Sửa dễ dàng):**[cite: 5]
-   - *Vị trí trỏ tới:* Thẻ tóm tắt dữ liệu trích xuất (*"Đối tượng: Phụ nữ mang thai 3 tháng..."*) kèm nút **[Sửa thông tin]** trước khi chuyển cho Dược sĩ ở Kịch bản #5[cite: 5].
-   - *Tác dụng:* Giải thích cho người dùng biết AI đang dựa vào dữ liệu gì để ra quyết định chuyển người, đồng thời cho phép người dùng sửa lỗi nhận diện của AI ngay lập tức (tránh trường hợp khách gõ nhầm "bầu 3 tháng" thành "bầu 8 tháng" hoặc AI hiểu sai ngữ cảnh)[cite: 5].
+1. **HAX G1 & G2 (Làm rõ hệ thống làm được gì và tốt đến đâu) + Luật AI 134/2025/QH15:**
+   - *Vị trí trỏ tới:* Dòng nhãn định danh dưới tên bot và câu mở đầu trong cả 2 kịch bản (*"Trợ lý AI không được phép gợi ý thuốc hạ sốt..."* / *"Trợ lý AI không thể tự ý gợi ý thuốc..."*).
+   - *Tác dụng:* Ngăn người dùng ngộ nhận AI là bác sĩ/dược sĩ thật, thiết lập kỳ vọng đúng ngay khi gặp ca khó.
+2. **HAX G10 (Thu hẹp phạm vi khi nghi ngờ / rủi ro cao):**
+   - *Vị trí trỏ tới:* Cơ chế ẩn hoàn toàn thẻ sản phẩm và nút "Đặt mua" ở cả 2 kịch bản, chỉ giữ lại 2 nút hành động an toàn (`[Gọi cấp cứu 115]` ở KB #2 và `[Kết nối Dược sĩ trực ngay]` ở KB #5).
+   - *Tác dụng:* Khi rủi ro vượt ngưỡng an toàn, giao diện tự động thu hẹp quyền tự quyết của AI về mức tối thiểu (chỉ điều hướng, không thương mại).
+3. **PAIR — Explainability + Trust & HAX G9 (Sửa dễ dàng):**
+   - *Vị trí trỏ tới:* Thẻ tóm tắt dữ liệu trích xuất (*"Đối tượng: Phụ nữ mang thai 3 tháng..."*) kèm nút **[Sửa thông tin]** trước khi chuyển cho Dược sĩ ở Kịch bản #5.
+   - *Tác dụng:* Giải thích cho người dùng biết AI đang dựa vào dữ liệu gì để ra quyết định chuyển người, đồng thời cho phép người dùng sửa lỗi nhận diện của AI ngay lập tức (tránh trường hợp khách gõ nhầm "bầu 3 tháng" thành "bầu 8 tháng" hoặc AI hiểu sai ngữ cảnh).
 
 ---
 
 ### 4. Lỗi sửa câu chữ không cứu được & Giải pháp thiết kế
 
-- **Lỗi sửa câu chữ không cứu được:** **AI bịa ra nguồn kiểm chứng hoặc tự ý hiển thị nút "Đặt mua nhanh" kèm liều dùng dưới dạng lời khuyên tham khảo** (ví dụ: AI viết rất khéo léo và lịch sự: *"Dạ theo dược điển, bé 3 tuổi sốt 39.5 độ có thể tham khảo dùng 1 gói Hapacol 250mg, nhưng mẹ nhớ đưa bé đi khám nhé"* kèm thẻ sản phẩm bên dưới)[cite: 5, 6].
-- **Vì sao câu chữ không cứu được?** Dù câu chữ có rào trước đón sau ("tham khảo", "nhớ đi khám"), hành vi tâm lý của người dùng đang hoảng loạn (như phụ huynh có con sốt lúc nửa đêm) sẽ mặc định coi gợi ý của hệ thống là chỉ định y khoa và bấm nút mua ngay[cite: 5, 6].
+- **Lỗi sửa câu chữ không cứu được:** **AI bịa ra nguồn kiểm chứng hoặc tự ý hiển thị nút "Đặt mua nhanh" kèm liều dùng dưới dạng lời khuyên tham khảo** (ví dụ: AI viết rất khéo léo và lịch sự: *"Dạ theo dược điển, bé 3 tuổi sốt 39.5 độ có thể tham khảo dùng 1 gói Hapacol 250mg, nhưng mẹ nhớ đưa bé đi khám nhé"* kèm thẻ sản phẩm bên dưới).
+- **Vì sao câu chữ không cứu được?** Dù câu chữ có rào trước đón sau ("tham khảo", "nhớ đi khám"), hành vi tâm lý của người dùng đang hoảng loạn (như phụ huynh có con sốt lúc nửa đêm) sẽ mặc định coi gợi ý của hệ thống là chỉ định y khoa và bấm nút mua ngay.
 - **Giải pháp thiết kế cứu lỗi (Hard Guardrail):** 
-  - Tách biệt hoàn toàn tầng sinh ngôn ngữ (LLM) và tầng gọi công cụ (Tool Execution) bằng **bộ lọc từ khóa/ý định rủi ro (Safety Classifier)** chạy trước[cite: 5].
-  - Khi bộ lọc phát hiện cờ đỏ (nhi khoa, thai kỳ, triệu chứng cấp cứu, thuốc kê đơn), hệ thống **khóa cứng (disable) API của tool `goi_y_san_pham` và `ban_thuoc_ke_don`** ở tầng code[cite: 6]. Lúc này, dù LLM có cố tình sinh ra câu chữ gợi ý thuốc, giao diện UI cũng không thể render ra thẻ sản phẩm hay nút đặt hàng, bắt buộc luồng UI phải chuyển sang giao diện cảnh báo hoặc hàng chờ dược sĩ[cite: 5, 6].
+  - Tách biệt hoàn toàn tầng sinh ngôn ngữ (LLM) và tầng gọi công cụ (Tool Execution) bằng **bộ lọc từ khóa/ý định rủi ro (Safety Classifier)** chạy trước.
+  - Khi bộ lọc phát hiện cờ đỏ (nhi khoa, thai kỳ, triệu chứng cấp cứu, thuốc kê đơn), hệ thống **khóa cứng (disable) API của tool `goi_y_san_pham` và `ban_thuoc_ke_don`** ở tầng code. Lúc này, dù LLM có cố tình sinh ra câu chữ gợi ý thuốc, giao diện UI cũng không thể render ra thẻ sản phẩm hay nút đặt hàng, bắt buộc luồng UI phải chuyển sang giao diện cảnh báo hoặc hàng chờ dược sĩ.
+
+---
 
 ## §4. Mức tự chủ  (chặng 4)
 Với mỗi tool:
