@@ -9,9 +9,9 @@
 
 | Họ và Tên | Mã Học Viên | Việc đã làm |
 |---|---|---|
-| Trần Hoàng Phát | 2A202603536 |  |
-| Phạm Hồng Khánh Huy | 2A202603588 |  |
-| Trương Văn Thông | 2A202603560 |  |
+| Trần Hoàng Phát | 2A202603536 | Viết §1; bổ sung 2 kịch bản và chỉnh sửa §2; phân tích ca #8 tại §3; cùng xây dựng và kiểm tra prototype (§5). |
+| Phạm Hồng Khánh Huy | 2A202603588 | Xây dựng 8 kịch bản ban đầu tại §2; phân tích ca #2 tại §3; cùng xây dựng và kiểm tra prototype (§5). |
+| Trương Văn Thông | 2A202603560 | Phân tích mức tự chủ tại §4; xây dựng tiêu chí và chấm thử tại §6; cùng xây dựng và kiểm tra prototype (§5). |
 
 ## §1. Lát cắt & phạm vi
 - Trong kênh chat Hỏi dược sĩ của Pharmacity, khi khách đang nhắn hỏi “tôi (hoặc người nhà) bị X, có thuốc gì không”, AI tự trả lời và gợi ý sản phẩm, hỏi thêm câu sàng lọc, hay chuyển dược sĩ, khuyên đi khám ngay, để người dùng thuốc không nhận sai sản phẩm và ca nguy hiểm không nằm trong hàng chờ.
